@@ -41,7 +41,5 @@ class ViewController: UIViewController {
         cardsDeckView.addSubview(cardView)
         cardView.fillSuperview()
     }
-
-
 }
 

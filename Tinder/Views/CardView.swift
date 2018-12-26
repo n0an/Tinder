@@ -21,11 +21,8 @@ class CardView: UIView {
         clipsToBounds = true
         
         addSubview(imageView)
-        
         imageView.fillSuperview()
-        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        
         addGestureRecognizer(panGesture)
     }
     
@@ -59,7 +56,6 @@ class CardView: UIView {
             
             self.transform = .identity
             self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
-
         })
     }
     
