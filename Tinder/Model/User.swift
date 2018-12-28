@@ -8,12 +8,11 @@
 
 import UIKit
 
-struct User {
+struct User: ProducesCardViewModel {
     let name: String
     let age: Int
     let profession: String
     let imageName:String
-    
     
     func toCardViewModel() -> CardViewModel {
         
@@ -23,5 +22,6 @@ struct User {
         
         return CardViewModel(imageName: imageName, attributedString: attributedText, textAlignment: .left)
     }
+    
 }
 
