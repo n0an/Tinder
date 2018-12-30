@@ -15,9 +15,9 @@ class HomeController: UIViewController {
     let buttonsStackView = HomeBottomControlsStackView()
     
     let cardViewModels = ([
-        User(name: "Kelly", age: 23, profession: "DJ", imageName: "lady5c"),
-        User(name: "Jane", age: 18, profession: "Teacher", imageName: "lady4c"),
-        Advertiser(title: "Advertiser", brandName: "This is Ad", posterPhotoName: "slide_out_menu_poster")
+            User(name: "Kelly", age: 23, profession: "DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
+            User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"]),
+            Advertiser(title: "Advertiser", brandName: "This is Ad", posterPhotoName: "slide_out_menu_poster")
         ] as [ProducesCardViewModel]).map {return $0.toCardViewModel()}.reversed()
     
     override func viewDidLoad() {
