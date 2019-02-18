@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150B9917221AEC9B002785AC /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150B9916221AEC9B002785AC /* RegistrationViewModel.swift */; };
 		150C7A7621CF7B350081887D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7A7521CF7B350081887D /* AppDelegate.swift */; };
 		150C7A7821CF7B350081887D /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7A7721CF7B350081887D /* HomeController.swift */; };
 		150C7A7B21CF7B350081887D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 150C7A7921CF7B350081887D /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		150B9916221AEC9B002785AC /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		150C7A7221CF7B350081887D /* Tinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		150C7A7521CF7B350081887D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		150C7A7721CF7B350081887D /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			children = (
 				150C7A7721CF7B350081887D /* HomeController.swift */,
 				157B1F7C221044CC001B8483 /* RegistrationController.swift */,
+				150B9916221AEC9B002785AC /* RegistrationViewModel.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */,
 				159E2DF221D66D74004546B0 /* CardViewModel.swift in Sources */,
 				157B1F7F22104E1B001B8483 /* CustomTextField.swift in Sources */,
+				150B9917221AEC9B002785AC /* RegistrationViewModel.swift in Sources */,
 				1537251721D10140009818D2 /* CardView.swift in Sources */,
 				150C7A8E21CF84BD0081887D /* TopNavigationStackView.swift in Sources */,
 				157B7B2721D51CB300474BEF /* User.swift in Sources */,

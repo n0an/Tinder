@@ -24,8 +24,8 @@ class RegistrationController: UIViewController {
     let fullNameTextField: CustomTextField = {
         let tf = CustomTextField(padding: 24)
         tf.placeholder = "Enter Full Name"
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         tf.backgroundColor = .white
-        
         return tf
     }()
     
@@ -34,7 +34,7 @@ class RegistrationController: UIViewController {
         tf.placeholder = "Enter Email"
         tf.keyboardType = .emailAddress
         tf.backgroundColor = .white
-        
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     
@@ -43,7 +43,7 @@ class RegistrationController: UIViewController {
         tf.placeholder = "Enter Password"
         tf.isSecureTextEntry = true
         tf.backgroundColor = .white
-        
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     
@@ -52,7 +52,9 @@ class RegistrationController: UIViewController {
         button.setTitle("Register", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
-        button.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1)
+        button.backgroundColor = .lightGray
+        button.setTitleColor(.gray, for: .disabled)
+        button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.layer.cornerRadius = 22
         return button
@@ -75,21 +77,19 @@ class RegistrationController: UIViewController {
         selectPhotoButton,
         verticalStackView
         ])
-
     
     let gradientLayer = CAGradientLayer()
-
     
+    let registrationViewModel = RegistrationViewModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupGradientLayer()
-        
         setupLayout()
-        
         setupNotificationObservers()
-        
         setupTapGesture()
+        setupRegistrationViewModelObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -102,6 +102,15 @@ class RegistrationController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
+    }
+    
+    fileprivate func setupRegistrationViewModelObserver() {
+        registrationViewModel.isFormValidObserver = { [weak self] isFormValid in
+            print("Form is changing is it valid? ", isFormValid)
+      
+            self?.registerButton.isEnabled = isFormValid
+            self?.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -127,6 +136,17 @@ class RegistrationController: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.view.transform = .identity
         }, completion: nil)
+    }
+    
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        if textField == fullNameTextField {
+            registrationViewModel.fullName = textField.text
+        } else if textField == emailTextField {
+            registrationViewModel.email = textField.text
+        } else {
+            registrationViewModel.password = textField.text
+        }
+        
     }
     
     fileprivate func setupTapGesture() {
