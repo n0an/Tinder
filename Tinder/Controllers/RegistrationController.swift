@@ -146,7 +146,6 @@ class RegistrationController: UIViewController {
         } else {
             registrationViewModel.password = textField.text
         }
-        
     }
     
     fileprivate func setupTapGesture() {

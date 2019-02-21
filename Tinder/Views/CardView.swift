@@ -95,8 +95,6 @@ class CardView: UIView {
         
         barsStackView.spacing = 4
         barsStackView.distribution = .fillEqually
-        
-        
     }
     
     fileprivate func setupGradientLayer() {
@@ -134,7 +132,6 @@ class CardView: UIView {
         } else {
             cardViewModel.goToPreviousPhoto()
         }
-      
     }
     
     fileprivate func handleEnded(_ gesture: UIPanGestureRecognizer) {

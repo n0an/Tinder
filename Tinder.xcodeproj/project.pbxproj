@@ -76,16 +76,16 @@
 		150C7A7421CF7B350081887D /* Tinder */ = {
 			isa = PBXGroup;
 			children = (
-				159E2DF021D66D56004546B0 /* ViewModels */,
-				157B7B2521D51CA100474BEF /* Model */,
-				150C7A8A21CF81AE0081887D /* Views */,
-				150C7A8721CF7DD80081887D /* Extensions */,
-				159E2DF321D66F83004546B0 /* Controllers */,
+				150C7A8121CF7B370081887D /* Info.plist */,
 				150C7A7521CF7B350081887D /* AppDelegate.swift */,
-				150C7A7921CF7B350081887D /* Main.storyboard */,
 				150C7A7C21CF7B370081887D /* Assets.xcassets */,
 				150C7A7E21CF7B370081887D /* LaunchScreen.storyboard */,
-				150C7A8121CF7B370081887D /* Info.plist */,
+				150C7A7921CF7B350081887D /* Main.storyboard */,
+				157B7B2521D51CA100474BEF /* Model */,
+				150C7A8A21CF81AE0081887D /* Views */,
+				159E2DF321D66F83004546B0 /* Controllers */,
+				150C7A8721CF7DD80081887D /* Extensions */,
+				159E2DF021D66D56004546B0 /* ViewModels */,
 			);
 			path = Tinder;
 			sourceTree = "<group>";
@@ -102,10 +102,10 @@
 		150C7A8A21CF81AE0081887D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				150C7A8B21CF81D70081887D /* HomeBottomControlsStackView.swift */,
-				150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */,
 				1537251621D10140009818D2 /* CardView.swift */,
 				157B1F7E22104E1B001B8483 /* CustomTextField.swift */,
+				150C7A8B21CF81D70081887D /* HomeBottomControlsStackView.swift */,
+				150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -113,8 +113,8 @@
 		157B7B2521D51CA100474BEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				157B7B2621D51CB300474BEF /* User.swift */,
 				159E2DF421D66F9F004546B0 /* Advertiser.swift */,
+				157B7B2621D51CB300474BEF /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

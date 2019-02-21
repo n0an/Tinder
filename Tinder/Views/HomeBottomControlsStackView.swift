@@ -25,7 +25,6 @@ class HomeBottomControlsStackView: UIStackView {
         buttons.forEach { (v) in
             addArrangedSubview(v)
         }
-        
     }
     
     required init(coder: NSCoder) {
