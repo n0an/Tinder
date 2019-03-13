@@ -20,8 +20,19 @@ class RegistrationController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 275).isActive = true
         button.layer.cornerRadius = 16
+        button.imageView?.contentMode = .scaleToFill
+        button.clipsToBounds = true
+        
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
+        
         return button
     }()
+    
+    @objc func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
     
     let fullNameTextField: CustomTextField = {
         let tf = CustomTextField(padding: 24)
@@ -137,12 +148,23 @@ class RegistrationController: UIViewController {
     }
     
     fileprivate func setupRegistrationViewModelObserver() {
-        registrationViewModel.isFormValidObserver = { [weak self] isFormValid in
+        
+        registrationViewModel.bindableIsFormValid.bind { [weak self] (isFormValid) in
+            
+            guard let isFormValid = isFormValid else { return }
+            
             print("Form is changing is it valid? ", isFormValid)
-      
+            
             self?.registerButton.isEnabled = isFormValid
             self?.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
+            
         }
+        
+        registrationViewModel.bindableImage.bind { [unowned self] (img) in
+            self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
+
+        }
+       
     }
     
     override func viewWillLayoutSubviews() {
@@ -223,5 +245,20 @@ class RegistrationController: UIViewController {
         overallStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+}
+
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        
+        registrationViewModel.bindableImage.value = image
+        
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
