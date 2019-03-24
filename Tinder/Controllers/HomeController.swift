@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeController: UIViewController {
     
@@ -14,11 +15,13 @@ class HomeController: UIViewController {
     let cardsDeckView = UIView()
     let buttonsStackView = HomeBottomControlsStackView()
     
-    let cardViewModels = ([
-            User(name: "Kelly", age: 23, profession: "DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
-            User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"]),
-            Advertiser(title: "Advertiser", brandName: "This is Ad", posterPhotoName: "slide_out_menu_poster")
-        ] as [ProducesCardViewModel]).map {return $0.toCardViewModel()}.reversed()
+//    let cardViewModels = ([
+//            User(name: "Kelly", age: 23, profession: "DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
+//            User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"]),
+//            Advertiser(title: "Advertiser", brandName: "This is Ad", posterPhotoName: "slide_out_menu_poster")
+//        ] as [ProducesCardViewModel]).map {return $0.toCardViewModel()}.reversed()
+    
+    var cardViewModels = [CardViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,7 @@ class HomeController: UIViewController {
         
         setupLayout()
         setupDummyCards()
+        fetchUsersFromFirestore()
     }
     
     @objc func handleSettings() {
@@ -36,6 +40,8 @@ class HomeController: UIViewController {
     
     // MARK: - HELPER METHODS
     fileprivate func setupLayout() {
+        view.backgroundColor = .white
+        
         let overallStackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, buttonsStackView])
         
         overallStackView.axis = .vertical
@@ -56,6 +62,28 @@ class HomeController: UIViewController {
             cardView.cardViewModel = cardVM
             cardsDeckView.addSubview(cardView)
             cardView.fillSuperview()
+        }
+    }
+    
+    fileprivate func fetchUsersFromFirestore() {
+        print("here")
+        
+        Firestore.firestore().collection("users").getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Failed to fetch", err.localizedDescription)
+                return
+            }
+            
+            snapshot?.documents.forEach { docSnapshot in
+                let userDict = docSnapshot.data()
+                
+                let user = User(dictionary: userDict)
+                
+                self.cardViewModels.append(user.toCardViewModel())
+                
+            }
+            
+            self.setupDummyCards()
         }
     }
 }
