@@ -25,6 +25,7 @@
 		159E2DF221D66D74004546B0 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159E2DF121D66D56004546B0 /* CardViewModel.swift */; };
 		159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159E2DF421D66F9F004546B0 /* Advertiser.swift */; };
 		15B3F97521D95AE400B4D404 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3F97421D95AE400B4D404 /* Comparable+Clamp.swift */; };
+		15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E29B09224ABE7F00D14AE2 /* SettingsController.swift */; };
 		D5670E38FDCD74F05B75AEA5 /* Pods_Tinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 159E3EEEFC28DAAF07B839A3 /* Pods_Tinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		159E2DF421D66F9F004546B0 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		159E3EEEFC28DAAF07B839A3 /* Pods_Tinder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tinder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		15B3F97421D95AE400B4D404 /* Comparable+Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamp.swift"; sourceTree = "<group>"; };
+		15E29B09224ABE7F00D14AE2 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		A045C89C9B32068D3199388F /* Pods-Tinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder.release.xcconfig"; path = "Target Support Files/Pods-Tinder/Pods-Tinder.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +148,7 @@
 				150C7A7721CF7B350081887D /* HomeController.swift */,
 				157B1F7C221044CC001B8483 /* RegistrationController.swift */,
 				159594EE2239107F003C3AB9 /* Bindable.swift */,
+				15E29B09224ABE7F00D14AE2 /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */,
 				150C7A7621CF7B350081887D /* AppDelegate.swift in Sources */,
 				150C7A8921CF7E170081887D /* Extensions+UIView.swift in Sources */,
+				15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */,
 				157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */,
 				159E2DF221D66D74004546B0 /* CardViewModel.swift in Sources */,
 				159594EF2239107F003C3AB9 /* Bindable.swift in Sources */,
