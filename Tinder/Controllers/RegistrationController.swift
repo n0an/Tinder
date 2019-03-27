@@ -73,7 +73,6 @@ class RegistrationController: UIViewController {
         
         button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         
-        
         return button
     }()
     
@@ -91,8 +90,6 @@ class RegistrationController: UIViewController {
             
             print("Finished registering our user")
         }
-        
-        
     }
     
     fileprivate func showHudWithError(error: Error) {
