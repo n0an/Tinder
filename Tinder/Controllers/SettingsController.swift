@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
+import SDWebImage
 
 class CustomImagePickerController: UIImagePickerController {
     var imageButton: UIButton?
@@ -47,6 +50,36 @@ class SettingsController: UITableViewController {
         tableView.tableFooterView = UIView()
         
         tableView.keyboardDismissMode = .interactive
+        
+        fetchCurrentUser()
+    }
+    
+    var user: User?
+    
+    fileprivate func fetchCurrentUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+            if let err = err {
+                print(err.localizedDescription)
+                return
+            }
+            
+            guard let dict = snapshot?.data() else { return }
+            self.user = User(dictionary: dict)
+            
+            self.loadUserPhotos()
+            
+            self.tableView.reloadData()
+        }
+    }
+    
+    fileprivate func loadUserPhotos() {
+        guard let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) else { return }
+        SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (image, data, err, _, _, _) in
+            
+            self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+            
+        }
     }
     
     fileprivate func setupNavigationItems() {
@@ -132,12 +165,18 @@ class SettingsController: UITableViewController {
         switch indexPath.section {
         case 1:
             cell.textField.placeholder = "Enter Name"
+            cell.textField.text = user?.name
         case 2:
             cell.textField.placeholder = "Enter Profession"
+            cell.textField.text = user?.profession
         case 3:
             cell.textField.placeholder = "Enter Age"
+            if let age = user?.age {
+                cell.textField.text = "\(age)"
+            }
         default:
             cell.textField.placeholder = "Enter Bio"
+            cell.textField.text = user?.name
         }
         
         return cell
