@@ -27,6 +27,7 @@
 		15B3F97521D95AE400B4D404 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15B3F97421D95AE400B4D404 /* Comparable+Clamp.swift */; };
 		15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E29B09224ABE7F00D14AE2 /* SettingsController.swift */; };
 		15EC1DCA224B9BD0009E919C /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DC9224B9BD0009E919C /* SettingsCell.swift */; };
+		15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DCB224CC852009E919C /* AgeRangeCell.swift */; };
 		D5670E38FDCD74F05B75AEA5 /* Pods_Tinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 159E3EEEFC28DAAF07B839A3 /* Pods_Tinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		15B3F97421D95AE400B4D404 /* Comparable+Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamp.swift"; sourceTree = "<group>"; };
 		15E29B09224ABE7F00D14AE2 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		15EC1DC9224B9BD0009E919C /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		15EC1DCB224CC852009E919C /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 		A045C89C9B32068D3199388F /* Pods-Tinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder.release.xcconfig"; path = "Target Support Files/Pods-Tinder/Pods-Tinder.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,6 +125,7 @@
 				150C7A8B21CF81D70081887D /* HomeBottomControlsStackView.swift */,
 				150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */,
 				15EC1DC9224B9BD0009E919C /* SettingsCell.swift */,
+				15EC1DCB224CC852009E919C /* AgeRangeCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				150C7A8C21CF81D70081887D /* HomeBottomControlsStackView.swift in Sources */,
 				159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */,
 				150C7A7621CF7B350081887D /* AppDelegate.swift in Sources */,
+				15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */,
 				150C7A8921CF7E170081887D /* Extensions+UIView.swift in Sources */,
 				15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */,
 				157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */,
