@@ -11,11 +11,17 @@ import Firebase
 import JGProgressHUD
 import SDWebImage
 
+protocol SettingsControllerDelegate: AnyObject {
+    func didSavedSettings()
+}
+
 class CustomImagePickerController: UIImagePickerController {
     var imageButton: UIButton?
 }
 
 class SettingsController: UITableViewController {
+    
+    weak var delegate: SettingsControllerDelegate?
     
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
@@ -55,23 +61,7 @@ class SettingsController: UITableViewController {
     }
     
     var user: User?
-    
-    fileprivate func fetchCurrentUser() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
-            if let err = err {
-                print(err.localizedDescription)
-                return
-            }
-            
-            guard let dict = snapshot?.data() else { return }
-            self.user = User(dictionary: dict)
-            
-            self.loadUserPhotos()
-            
-            self.tableView.reloadData()
-        }
-    }
+
     
     fileprivate func loadUserPhotos() {
         if let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) {
@@ -253,8 +243,6 @@ class SettingsController: UITableViewController {
         self.user?.age = Int(textField.text ?? "")
     }
     
-    
-    
     @objc fileprivate func handleCancel() {
         dismiss(animated: true)
     }
@@ -273,7 +261,6 @@ class SettingsController: UITableViewController {
             "profession": user?.profession ?? "",
             "minSeekingAge": user?.minSeekingAge ?? -1,
             "maxSeekingAge": user?.maxSeekingAge ?? -1
-            
         ]
         
         let hud = JGProgressHUD(style: .dark)
@@ -288,6 +275,11 @@ class SettingsController: UITableViewController {
             }
             
             print("user saved")
+            
+            self.dismiss(animated: true, completion: {
+                self.delegate?.didSavedSettings()
+                
+            })
         }
     }
     
@@ -348,4 +340,13 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
     }
+}
+
+extension SettingsController: UserFetchingProtocol {
+    func didFetchedUser() {
+        self.loadUserPhotos()
+        self.tableView.reloadData()
+    }
+    
+    
 }

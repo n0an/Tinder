@@ -16,6 +16,7 @@ class HomeController: UIViewController {
     let cardsDeckView = UIView()
     let bottomControls = HomeBottomControlsStackView()
     
+    var user: User?
     
     
 //    let cardViewModels = ([
@@ -33,12 +34,18 @@ class HomeController: UIViewController {
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         
         setupLayout()
-        setupFirestoreUserCards()
-        fetchUsersFromFirestore()
+        
+        fetchCurrentUser()
+        
+//        setupFirestoreUserCards()
+//        fetchUsersFromFirestore()
     }
+  
     
     @objc fileprivate func handleSettings() {
         let settingsController = SettingsController()
+        
+        settingsController.delegate = self
         let navController = UINavigationController(rootViewController: settingsController)
         present(navController, animated: true, completion: nil)
     }
@@ -83,7 +90,8 @@ class HomeController: UIViewController {
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
         
-        let query = Firestore.firestore().collection("users").order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 4)
+//        let query = Firestore.firestore().collection("users").order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 4)
+        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: user?.minSeekingAge ?? 18).whereField("age", isLessThanOrEqualTo: user?.maxSeekingAge ?? 100)
         
         query.getDocuments { (snapshot, err) in
             hud.dismiss()
@@ -103,9 +111,7 @@ class HomeController: UIViewController {
                 self.lastFetchedUser = user
                 
                 self.setupCardFromUser(user: user)
-                
             }
-            
         }
     }
     
@@ -117,4 +123,20 @@ class HomeController: UIViewController {
         cardView.fillSuperview()
 
     }
+}
+
+extension HomeController: SettingsControllerDelegate {
+    
+    func didSavedSettings() {
+        fetchCurrentUser()
+    }
+}
+
+extension HomeController: UserFetchingProtocol {
+    
+    func didFetchedUser() {
+        self.fetchUsersFromFirestore()
+    }
+    
+    
 }

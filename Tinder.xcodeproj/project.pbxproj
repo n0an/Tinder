@@ -28,6 +28,7 @@
 		15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E29B09224ABE7F00D14AE2 /* SettingsController.swift */; };
 		15EC1DCA224B9BD0009E919C /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DC9224B9BD0009E919C /* SettingsCell.swift */; };
 		15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DCB224CC852009E919C /* AgeRangeCell.swift */; };
+		15EC1DCE224D074C009E919C /* UserFetchingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DCD224D074C009E919C /* UserFetchingProtocol.swift */; };
 		D5670E38FDCD74F05B75AEA5 /* Pods_Tinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 159E3EEEFC28DAAF07B839A3 /* Pods_Tinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		15E29B09224ABE7F00D14AE2 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		15EC1DC9224B9BD0009E919C /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		15EC1DCB224CC852009E919C /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
+		15EC1DCD224D074C009E919C /* UserFetchingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFetchingProtocol.swift; sourceTree = "<group>"; };
 		A045C89C9B32068D3199388F /* Pods-Tinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder.release.xcconfig"; path = "Target Support Files/Pods-Tinder/Pods-Tinder.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 				157B1F7C221044CC001B8483 /* RegistrationController.swift */,
 				159594EE2239107F003C3AB9 /* Bindable.swift */,
 				15E29B09224ABE7F00D14AE2 /* SettingsController.swift */,
+				15EC1DCD224D074C009E919C /* UserFetchingProtocol.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15EC1DCE224D074C009E919C /* UserFetchingProtocol.swift in Sources */,
 				150C7A7821CF7B350081887D /* HomeController.swift in Sources */,
 				15B3F97521D95AE400B4D404 /* Comparable+Clamp.swift in Sources */,
 				150C7A8C21CF81D70081887D /* HomeBottomControlsStackView.swift in Sources */,
