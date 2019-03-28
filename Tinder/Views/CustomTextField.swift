@@ -11,11 +11,15 @@ import UIKit
 class CustomTextField: UITextField {
     
     let padding: CGFloat
+    let height: CGFloat
     
-    init(padding: CGFloat) {
+    init(padding: CGFloat, height: CGFloat) {
         self.padding = padding
+        self.height = height
         super.init(frame: .zero)
-        layer.cornerRadius = 25
+    
+        layer.cornerRadius = height/2
+        backgroundColor = .white
     }
     
     required init?(coder aDecoder: NSCoder) {

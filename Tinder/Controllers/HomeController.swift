@@ -40,6 +40,18 @@ class HomeController: UIViewController {
 //        setupFirestoreUserCards()
 //        fetchUsersFromFirestore()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser == nil {
+            let loginController = LoginController()
+            loginController.delegate = self
+            let navController = UINavigationController(rootViewController: loginController)
+            present(navController, animated: true)
+        }
+        
+    }
   
     
     @objc fileprivate func handleSettings() {
@@ -54,8 +66,10 @@ class HomeController: UIViewController {
         fetchUsersFromFirestore()
     }
     
+    
     // MARK: - HELPER METHODS
     fileprivate func setupLayout() {
+        
         view.backgroundColor = .white
         
         let overallStackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, bottomControls])
@@ -137,6 +151,10 @@ extension HomeController: UserFetchingProtocol {
     func didFetchedUser() {
         self.fetchUsersFromFirestore()
     }
-    
-    
+}
+
+extension HomeController: LoginControllerDelegate {
+    func didFinishLoggingIn() {
+        fetchCurrentUser()
+    }
 }

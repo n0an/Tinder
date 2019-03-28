@@ -28,6 +28,21 @@ class RegistrationController: UIViewController {
         return button
     }()
     
+    let goToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Go to Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleGoToLogin() {
+        let loginController = UIViewController()
+        loginController.view.backgroundColor = .yellow
+        navigationController?.pushViewController(loginController, animated: true)
+    }
+    
     @objc func handleSelectPhoto() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -35,7 +50,7 @@ class RegistrationController: UIViewController {
     }
     
     let fullNameTextField: CustomTextField = {
-        let tf = CustomTextField(padding: 24)
+        let tf = CustomTextField(padding: 24, height: 50)
         tf.placeholder = "Enter Full Name"
         tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         tf.backgroundColor = .white
@@ -43,7 +58,7 @@ class RegistrationController: UIViewController {
     }()
     
     let emailTextField: CustomTextField = {
-        let tf = CustomTextField(padding: 24)
+        let tf = CustomTextField(padding: 24, height: 50)
         tf.placeholder = "Enter Email"
         tf.keyboardType = .emailAddress
         tf.backgroundColor = .white
@@ -52,7 +67,7 @@ class RegistrationController: UIViewController {
     }()
     
     let passwordTextField: CustomTextField = {
-        let tf = CustomTextField(padding: 24)
+        let tf = CustomTextField(padding: 24, height: 50)
         tf.placeholder = "Enter Password"
         tf.isSecureTextEntry = true
         tf.backgroundColor = .white
@@ -241,7 +256,8 @@ class RegistrationController: UIViewController {
     }
     
     fileprivate func setupLayout() {
-        
+        navigationController?.isNavigationBarHidden = true
+
         view.addSubview(overallStackView)
         
         setupStackViewAxis(horizontal: self.traitCollection.verticalSizeClass == .compact)
@@ -252,6 +268,9 @@ class RegistrationController: UIViewController {
         overallStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        view.addSubview(goToLoginButton)
+        goToLoginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
 }
 

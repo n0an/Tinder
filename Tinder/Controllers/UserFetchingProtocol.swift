@@ -8,8 +8,9 @@
 
 import Foundation
 import Firebase
+import JGProgressHUD
 
-protocol UserFetchingProtocol: AnyObject {
+protocol UserFetchingProtocol: UIViewController {
     var user: User? { get set }
     
     func fetchCurrentUser()
@@ -21,8 +22,13 @@ protocol UserFetchingProtocol: AnyObject {
 extension UserFetchingProtocol {
     func fetchCurrentUser() {
         
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Loading"
+        hud.show(in: self.view)
+        
         guard let uid = Auth.auth().currentUser?.uid else { return }
         Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
+            hud.dismiss()
             if let err = err {
                 print(err.localizedDescription)
                 return

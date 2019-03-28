@@ -29,6 +29,8 @@
 		15EC1DCA224B9BD0009E919C /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DC9224B9BD0009E919C /* SettingsCell.swift */; };
 		15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DCB224CC852009E919C /* AgeRangeCell.swift */; };
 		15EC1DCE224D074C009E919C /* UserFetchingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DCD224D074C009E919C /* UserFetchingProtocol.swift */; };
+		15EC1DD2224D57AF009E919C /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DD1224D577D009E919C /* LoginController.swift */; };
+		15EC1DD3224D57AF009E919C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DD0224D577D009E919C /* LoginViewModel.swift */; };
 		D5670E38FDCD74F05B75AEA5 /* Pods_Tinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 159E3EEEFC28DAAF07B839A3 /* Pods_Tinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +61,8 @@
 		15EC1DC9224B9BD0009E919C /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		15EC1DCB224CC852009E919C /* AgeRangeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeCell.swift; sourceTree = "<group>"; };
 		15EC1DCD224D074C009E919C /* UserFetchingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFetchingProtocol.swift; sourceTree = "<group>"; };
+		15EC1DD0224D577D009E919C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		15EC1DD1224D577D009E919C /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		A045C89C9B32068D3199388F /* Pods-Tinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder.release.xcconfig"; path = "Target Support Files/Pods-Tinder/Pods-Tinder.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +157,7 @@
 		159E2DF321D66F83004546B0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				15EC1DCF224D5582009E919C /* Login */,
 				150C7A7721CF7B350081887D /* HomeController.swift */,
 				157B1F7C221044CC001B8483 /* RegistrationController.swift */,
 				159594EE2239107F003C3AB9 /* Bindable.swift */,
@@ -160,6 +165,15 @@
 				15EC1DCD224D074C009E919C /* UserFetchingProtocol.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		15EC1DCF224D5582009E919C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				15EC1DD1224D577D009E919C /* LoginController.swift */,
+				15EC1DD0224D577D009E919C /* LoginViewModel.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		3F4C5BE0FFCAEEE28B9475D4 /* Pods */ = {
@@ -295,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15EC1DD2224D57AF009E919C /* LoginController.swift in Sources */,
 				15EC1DCE224D074C009E919C /* UserFetchingProtocol.swift in Sources */,
 				150C7A7821CF7B350081887D /* HomeController.swift in Sources */,
 				15B3F97521D95AE400B4D404 /* Comparable+Clamp.swift in Sources */,
@@ -302,6 +317,7 @@
 				159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */,
 				150C7A7621CF7B350081887D /* AppDelegate.swift in Sources */,
 				15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */,
+				15EC1DD3224D57AF009E919C /* LoginViewModel.swift in Sources */,
 				150C7A8921CF7E170081887D /* Extensions+UIView.swift in Sources */,
 				15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */,
 				157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */,

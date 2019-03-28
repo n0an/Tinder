@@ -61,6 +61,8 @@ class SettingsController: UITableViewController {
     }
     
     var user: User?
+    
+    
 
     
     fileprivate func loadUserPhotos() {
@@ -284,6 +286,8 @@ class SettingsController: UITableViewController {
     }
     
     @objc fileprivate func handleLogout() {
+        try? Auth.auth().signOut()
+        
         dismiss(animated: true)
     }
     
