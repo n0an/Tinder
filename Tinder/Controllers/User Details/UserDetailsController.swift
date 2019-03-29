@@ -15,7 +15,6 @@ class UserDetailsController: UIViewController {
             infoLabel.attributedText = cardViewModel.attributedString
             
             swipingPhotosController.cardViewModel = cardViewModel
-   
         }
     }
  
@@ -110,16 +109,11 @@ class UserDetailsController: UIViewController {
         setupLayout()
         setupVisualBlurEffectView()
         setupBottomControls()
-        
     }
-    
-    
     
     @objc fileprivate func handleTapDismiss() {
         self.dismiss(animated: true)
     }
-    
-    
     
 }
 
