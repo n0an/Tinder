@@ -10,7 +10,10 @@ import UIKit
 import Firebase
 import JGProgressHUD
 
+
 class RegistrationController: UIViewController {
+    
+    weak var delegate: LoginControllerDelegate?
     
     let selectPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -38,8 +41,8 @@ class RegistrationController: UIViewController {
     }()
     
     @objc fileprivate func handleGoToLogin() {
-        let loginController = UIViewController()
-        loginController.view.backgroundColor = .yellow
+        let loginController = LoginController()
+        loginController.delegate = delegate
         navigationController?.pushViewController(loginController, animated: true)
     }
     
@@ -104,6 +107,10 @@ class RegistrationController: UIViewController {
             }
             
             print("Finished registering our user")
+            
+            self?.dismiss(animated: true, completion: {
+                self?.delegate?.didFinishLoggingIn()
+            })
         }
     }
     
@@ -288,3 +295,5 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
         dismiss(animated: true, completion: nil)
     }
 }
+
+

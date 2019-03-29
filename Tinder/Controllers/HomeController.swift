@@ -45,9 +45,9 @@ class HomeController: UIViewController {
         super.viewDidAppear(animated)
         
         if Auth.auth().currentUser == nil {
-            let loginController = LoginController()
-            loginController.delegate = self
-            let navController = UINavigationController(rootViewController: loginController)
+            let registrationController = RegistrationController()
+            registrationController.delegate = self
+            let navController = UINavigationController(rootViewController: registrationController)
             present(navController, animated: true)
         }
         
@@ -120,22 +120,23 @@ class HomeController: UIViewController {
                 
                 let user = User(dictionary: userDict)
                 
-                self.cardViewModels.append(user.toCardViewModel())
-                
-                self.lastFetchedUser = user
-                
-                self.setupCardFromUser(user: user)
+                if user.uid != Auth.auth().currentUser?.uid {
+                    
+                    self.setupCardFromUser(user: user)
+                }
+//                self.cardViewModels.append(user.toCardViewModel())
+//                self.lastFetchedUser = user
             }
         }
     }
     
     fileprivate func setupCardFromUser(user: User) {
         let cardView = CardView(frame: .zero)
+        cardView.delegate = self
         cardView.cardViewModel = user.toCardViewModel()
         cardsDeckView.addSubview(cardView)
         cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
-
     }
 }
 
@@ -158,3 +159,12 @@ extension HomeController: LoginControllerDelegate {
         fetchCurrentUser()
     }
 }
+
+extension HomeController: CardViewDelegate {
+    func didTapMoreInfo() {
+        let vc = UserDetailsController()
+        
+        present(vc, animated: true)
+    }
+}
+

@@ -9,6 +9,10 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate: AnyObject {
+    func didTapMoreInfo()
+}
+
 class CardView: UIView {
     
     fileprivate let threshold: CGFloat = 100
@@ -20,6 +24,8 @@ class CardView: UIView {
     fileprivate let barsStackView = UIStackView()
     
     var imageIndex = 0
+    
+    weak var delegate: CardViewDelegate?
     
     fileprivate let barDeselectedColor = UIColor(white: 0, alpha: 0.1)
     
@@ -62,6 +68,20 @@ class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        button.setImage(#imageLiteral(resourceName: "33").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+        
+        
+        return button
+    }()
+    
+    @objc fileprivate func handleMoreInfo() {
+        delegate?.didTapMoreInfo()
+    }
+    
     fileprivate func setupLayout() {
         layer.cornerRadius = 10
         clipsToBounds = true
@@ -79,6 +99,9 @@ class CardView: UIView {
         
         informationLabel.textColor = .white
         informationLabel.numberOfLines = 0
+        
+        addSubview(moreInfoButton)
+        moreInfoButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
     }
     
     fileprivate func setupImageIndexObserver() {
