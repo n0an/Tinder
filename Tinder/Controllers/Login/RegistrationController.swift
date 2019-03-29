@@ -23,7 +23,7 @@ class RegistrationController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.heightAnchor.constraint(equalToConstant: 275).isActive = true
         button.layer.cornerRadius = 16
-        button.imageView?.contentMode = .scaleToFill
+        button.imageView?.contentMode = .scaleAspectFill
         button.clipsToBounds = true
         
         button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
