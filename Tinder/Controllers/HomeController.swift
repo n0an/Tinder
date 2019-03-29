@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import JGProgressHUD
+//import SafariServices
 
 class HomeController: UIViewController {
     
@@ -36,6 +37,8 @@ class HomeController: UIViewController {
         setupLayout()
         
         fetchCurrentUser()
+        
+        
         
 //        setupFirestoreUserCards()
 //        fetchUsersFromFirestore()
@@ -161,10 +164,12 @@ extension HomeController: LoginControllerDelegate {
 }
 
 extension HomeController: CardViewDelegate {
-    func didTapMoreInfo() {
+    func didTapMoreInfo(_ cardViewModel: CardViewModel) {
         let vc = UserDetailsController()
+        vc.cardViewModel = cardViewModel
         
         present(vc, animated: true)
     }
+    
 }
 
