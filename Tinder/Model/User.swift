@@ -12,7 +12,6 @@ struct User: ProducesCardViewModel {
     var name: String?
     var age: Int?
     var profession: String?
-//    let imageNames: [String]
     
     var imageUrl1: String?
     var imageUrl2: String?
@@ -39,8 +38,6 @@ struct User: ProducesCardViewModel {
         
         self.minSeekingAge = dictionary["minSeekingAge"] as? Int
         self.maxSeekingAge = dictionary["maxSeekingAge"] as? Int
-
-        
     }
     
     func toCardViewModel() -> CardViewModel {
@@ -58,9 +55,7 @@ struct User: ProducesCardViewModel {
         if let url = imageUrl2 { imageUrls.append(url) }
         if let url = imageUrl3 { imageUrls.append(url) }
 
-        
         return CardViewModel(imageNames: imageUrls, attributedString: attributedText, textAlignment: .left)
     }
-    
 }
 

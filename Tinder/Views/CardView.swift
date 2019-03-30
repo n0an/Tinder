@@ -9,14 +9,18 @@
 import UIKit
 import SDWebImage
 
+// MARK: - CardViewDelegate
 protocol CardViewDelegate: AnyObject {
     func didTapMoreInfo(_ cardViewModel: CardViewModel)
 }
 
 class CardView: UIView {
     
+    // MARK: - CONSTANTS
     fileprivate let threshold: CGFloat = 100
+    fileprivate let barDeselectedColor = UIColor(white: 0, alpha: 0.1)
     
+    // MARK: - PROPERTIES
     fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
     fileprivate let gradientLayer = CAGradientLayer()
     fileprivate let informationLabel = UILabel()
@@ -27,14 +31,10 @@ class CardView: UIView {
     
     weak var delegate: CardViewDelegate?
     
-    fileprivate let barDeselectedColor = UIColor(white: 0, alpha: 0.1)
-    
     var cardViewModel: CardViewModel! {
         didSet {
             let imageName = cardViewModel.imageUrls.first ?? ""
-                
-//            imageView.image = UIImage(named: cardViewModel.imageNames.first ?? "")
-                
+            
             if let url = URL(string: imageName) {
                 imageView.sd_setImage(with: url)
             }
@@ -53,6 +53,17 @@ class CardView: UIView {
         }
     }
     
+    // MARK: - SUBVIEWS
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        
+        button.setImage(#imageLiteral(resourceName: "33").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    // MARK: - INIT
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -68,20 +79,12 @@ class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate let moreInfoButton: UIButton = {
-        let button = UIButton(type: .system)
-        
-        button.setImage(#imageLiteral(resourceName: "33").withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
-        
-        
-        return button
-    }()
-    
-    @objc fileprivate func handleMoreInfo() {
-        delegate?.didTapMoreInfo(self.cardViewModel)
+    // MARK: - VIEW LIFECYCLE
+    override func layoutSubviews() {
+        gradientLayer.frame = self.frame
     }
     
+    // MARK: - HELPER METHODS
     fileprivate func setupLayout() {
         layer.cornerRadius = 10
         clipsToBounds = true
@@ -139,8 +142,9 @@ class CardView: UIView {
         layer.addSublayer(gradientLayer)
     }
     
-    override func layoutSubviews() {
-        gradientLayer.frame = self.frame
+    // MARK: - ACTIONS
+    @objc fileprivate func handleMoreInfo() {
+        delegate?.didTapMoreInfo(self.cardViewModel)
     }
     
     @objc fileprivate func handlePan(gesture: UIPanGestureRecognizer) {
@@ -190,14 +194,10 @@ class CardView: UIView {
     }
     
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
-        
         let translation = gesture.translation(in: nil)
-        
         let degrees = translation.x / 20
         let angle = degrees * .pi / 180
-        
         let rotation = CGAffineTransform(rotationAngle: angle)
-        
         self.transform = rotation.translatedBy(x: translation.x, y: translation.y)
     }
 }
