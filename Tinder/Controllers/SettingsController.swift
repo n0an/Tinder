@@ -21,6 +21,9 @@ class CustomImagePickerController: UIImagePickerController {
 
 class SettingsController: UITableViewController {
     
+    static let defaultMinSeekingAge = 18
+    static let defaultMaxSeekingAge = 100
+    
     weak var delegate: SettingsControllerDelegate?
     
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
@@ -197,11 +200,14 @@ class SettingsController: UITableViewController {
             ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
             ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
             
-            ageRangeCell.minSlider.value = Float(user?.minSeekingAge ?? 18)
-            ageRangeCell.maxSlider.value = Float(user?.maxSeekingAge ?? 80)
+            let minAge = user?.minSeekingAge ?? SettingsController.defaultMinSeekingAge
+            let maxAge = user?.maxSeekingAge ?? SettingsController.defaultMaxSeekingAge
             
-            ageRangeCell.minLabel.text = "Min: \(user?.minSeekingAge ?? 18)"
-            ageRangeCell.maxLabel.text = "Max: \(user?.maxSeekingAge ?? 100)"
+            ageRangeCell.minSlider.value = Float(minAge)
+            ageRangeCell.maxSlider.value = Float(maxAge)
+            
+            ageRangeCell.minLabel.text = "Min: \(minAge)"
+            ageRangeCell.maxLabel.text = "Max: \(maxAge)"
             
             return ageRangeCell
         }
@@ -261,8 +267,8 @@ class SettingsController: UITableViewController {
             "imageUrl3": user?.imageUrl3 ?? "",
             "age": user?.age ?? -1,
             "profession": user?.profession ?? "",
-            "minSeekingAge": user?.minSeekingAge ?? -1,
-            "maxSeekingAge": user?.maxSeekingAge ?? -1
+            "minSeekingAge": user?.minSeekingAge ?? 18,
+            "maxSeekingAge": user?.maxSeekingAge ?? 100
         ]
         
         let hud = JGProgressHUD(style: .dark)

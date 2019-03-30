@@ -107,8 +107,7 @@ class HomeController: UIViewController {
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
         
-//        let query = Firestore.firestore().collection("users").order(by: "uid").start(after: [lastFetchedUser?.uid ?? ""]).limit(to: 4)
-        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: user?.minSeekingAge ?? 18).whereField("age", isLessThanOrEqualTo: user?.maxSeekingAge ?? 100)
+        let query = Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: user?.minSeekingAge ?? SettingsController.defaultMinSeekingAge).whereField("age", isLessThanOrEqualTo: user?.maxSeekingAge ?? SettingsController.defaultMaxSeekingAge)
         
         query.getDocuments { (snapshot, err) in
             hud.dismiss()
