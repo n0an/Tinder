@@ -33,6 +33,7 @@
 		15EC1DD3224D57AF009E919C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DD0224D577D009E919C /* LoginViewModel.swift */; };
 		15EC1DD5224E08BC009E919C /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1DD4224E08BC009E919C /* UserDetailsController.swift */; };
 		15EC1E18224E4380009E919C /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1E17224E4380009E919C /* SwipingPhotosController.swift */; };
+		15EC1E74224FF14F009E919C /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EC1E73224FF14E009E919C /* PhotoController.swift */; };
 		D5670E38FDCD74F05B75AEA5 /* Pods_Tinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 159E3EEEFC28DAAF07B839A3 /* Pods_Tinder.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		15EC1DD1224D577D009E919C /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		15EC1DD4224E08BC009E919C /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		15EC1E17224E4380009E919C /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
+		15EC1E73224FF14E009E919C /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		A045C89C9B32068D3199388F /* Pods-Tinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder.release.xcconfig"; path = "Target Support Files/Pods-Tinder/Pods-Tinder.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,6 +188,7 @@
 			children = (
 				15EC1DD4224E08BC009E919C /* UserDetailsController.swift */,
 				15EC1E17224E4380009E919C /* SwipingPhotosController.swift */,
+				15EC1E73224FF14E009E919C /* PhotoController.swift */,
 			);
 			path = "User Details";
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15EC1DD2224D57AF009E919C /* LoginController.swift in Sources */,
+				15EC1E74224FF14F009E919C /* PhotoController.swift in Sources */,
 				15EC1DCE224D074C009E919C /* UserFetchingProtocol.swift in Sources */,
 				150C7A7821CF7B350081887D /* HomeController.swift in Sources */,
 				15B3F97521D95AE400B4D404 /* Comparable+Clamp.swift in Sources */,
