@@ -12,6 +12,7 @@ import SDWebImage
 // MARK: - CardViewDelegate
 protocol CardViewDelegate: AnyObject {
     func didTapMoreInfo(_ cardViewModel: CardViewModel)
+    func didRemoveCard(cardView: CardView)
 }
 
 class CardView: UIView {
@@ -33,6 +34,8 @@ class CardView: UIView {
     var imageIndex = 0
     
     weak var delegate: CardViewDelegate?
+    
+    var nextCardView: CardView?
     
     var cardViewModel: CardViewModel! {
         didSet {
@@ -195,6 +198,8 @@ class CardView: UIView {
             
             if shouldDismissCard {
                 self.removeFromSuperview()
+                
+                self.delegate?.didRemoveCard(cardView: self)
             }
         })
     }
