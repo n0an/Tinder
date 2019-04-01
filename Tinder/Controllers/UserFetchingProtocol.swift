@@ -27,6 +27,7 @@ extension UserFetchingProtocol {
         hud.show(in: self.view)
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
+        
         Firestore.firestore().collection("users").document(uid).getDocument { (snapshot, err) in
             hud.dismiss()
             if let err = err {
