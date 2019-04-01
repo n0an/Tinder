@@ -19,7 +19,6 @@ class HomeController: UIViewController {
     
     var user: User?
     
-    
 //    let cardViewModels = ([
 //            User(name: "Kelly", age: 23, profession: "DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
 //            User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"]),
@@ -39,9 +38,6 @@ class HomeController: UIViewController {
         setupLayout()
         
         fetchCurrentUser()
-        
-//        setupFirestoreUserCards()
-//        fetchUsersFromFirestore()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,8 +52,6 @@ class HomeController: UIViewController {
         
     }
     
-    
-  
     
     @objc fileprivate func handleSettings() {
         let settingsController = SettingsController()
@@ -146,23 +140,50 @@ class HomeController: UIViewController {
     var topCardView: CardView?
     
     @objc fileprivate func handleDislike() {
+        saveSwipeToFirestore(didLike: false)
         animateSwipe(isLike: false)
     }
 
-    
     @objc fileprivate func handleLike() {
-       animateSwipe(isLike: true)
+        saveSwipeToFirestore(didLike: true)
+        animateSwipe(isLike: true)
+    }
+    
+    fileprivate func saveSwipeToFirestore(didLike: Bool) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let cardUID = topCardView?.cardViewModel.uid else { return }
+        
+        let likesData = [cardUID: didLike ? 1 : 0]
+        
+        Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, err) in
+            if let err = err {
+                print("no swipes data", err.localizedDescription)
+                return
+            }
+            
+            if snapshot?.exists == true {
+                
+                Firestore.firestore().collection("swipes").document(uid).updateData(likesData) { (err) in
+                    if let err = err {
+                        print(err)
+                        return
+                    }
+                    print("likes updated")
+                }
+            } else {
+                Firestore.firestore().collection("swipes").document(uid).setData(likesData) { (err) in
+                    if let err = err {
+                        print(err)
+                        return
+                    }
+                    print("likes set")
+                }
+            }
+        }
     }
     
     fileprivate func animateSwipe(isLike: Bool) {
-        
-        //        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-        //            self.topCardView?.frame = CGRect(x: 600, y: 0, width: self.topCardView!.frame.width, height: self.topCardView!.frame.height)
-        //            self.topCardView?.transform = CGAffineTransform(rotationAngle: 15 * CGFloat.pi / 180)
-        //        }) { (_) in
-        //            self.topCardView?.removeFromSuperview()
-        //            self.topCardView = self.topCardView?.nextCardView
-        //        }
         
         let animationDuration = 0.5
         
@@ -222,9 +243,14 @@ extension HomeController: LoginControllerDelegate {
 }
 
 extension HomeController: CardViewDelegate {
-    func didRemoveCard(cardView: CardView) {
+    func didRemoveCard(cardView: CardView, withDismissDirection: CGFloat) {
         self.topCardView?.removeFromSuperview()
         self.topCardView = self.topCardView?.nextCardView
+        if withDismissDirection == 1 {
+            saveSwipeToFirestore(didLike: true)
+        } else {
+            saveSwipeToFirestore(didLike: false)
+        }
     }
     
     func didTapMoreInfo(_ cardViewModel: CardViewModel) {

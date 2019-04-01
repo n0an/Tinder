@@ -16,6 +16,7 @@ class CardViewModel {
     let imageUrls: [String]
     let attributedString: NSAttributedString
     let textAlignment: NSTextAlignment
+    let uid: String
     
     fileprivate var imageIndex = 0 {
         didSet {
@@ -25,10 +26,11 @@ class CardViewModel {
         }
     }
     
-    init(imageNames: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment) {
+    init(uid: String, imageNames: [String], attributedString: NSAttributedString, textAlignment: NSTextAlignment) {
         self.imageUrls = imageNames
         self.attributedString = attributedString
         self.textAlignment = textAlignment
+        self.uid = uid
     }
     
     var imageIndexObserver: ((Int, String?) -> ())?
