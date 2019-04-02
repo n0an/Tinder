@@ -51,7 +51,6 @@ class HomeController: UIViewController {
             let navController = UINavigationController(rootViewController: registrationController)
             present(navController, animated: true)
         }
-        
     }
     
     @objc fileprivate func handleSettings() {
@@ -63,6 +62,9 @@ class HomeController: UIViewController {
     }
     
     @objc fileprivate func handleRefresh() {
+        
+        cardsDeckView.subviews.forEach { $0.removeFromSuperview() }
+        
         fetchUsersFromFirestore()
     }
     
@@ -127,7 +129,9 @@ class HomeController: UIViewController {
                 let user = User(dictionary: userDict)
                 
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
-                let notSwiped = self.swipes[user.uid!] == nil
+                
+//                let notSwiped = self.swipes[user.uid!] == nil
+                let notSwiped = true
                 
                 if  isNotCurrentUser && notSwiped {
                     
@@ -207,16 +211,24 @@ class HomeController: UIViewController {
             if let likesData = snapshot?.data() as? [String: Int] {
                 
                 if likesData[currentUserID] == 1 {
-                    let hud = JGProgressHUD(style: .dark)
-                    hud.textLabel.text = "MATCH"
-                    hud.show(in: self.view)
-                    hud.dismiss(afterDelay: 4)
+                    print("MATCH")
+                    self.presentMatchView(cardUID: cardUID)
                 } else {
                     print("NO MATCH")
                 }
             }
             
         }
+    }
+    
+    fileprivate func presentMatchView(cardUID: String) {
+        
+        let matchView = MatchView()
+        
+        view.addSubview(matchView)
+        matchView.fillSuperview()
+        
+
     }
 
     fileprivate func animateSwipe(isLike: Bool) {
