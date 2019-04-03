@@ -18,6 +18,8 @@
 		150C7A8E21CF84BD0081887D /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */; };
 		1537251721D10140009818D2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1537251621D10140009818D2 /* CardView.swift */; };
 		154B65192253F938001E8A41 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B65182253F938001E8A41 /* MatchView.swift */; };
+		154B651B2254E77A001E8A41 /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B651A2254E77A001E8A41 /* SendMessageButton.swift */; };
+		154B651D22554BC2001E8A41 /* KeepSwipingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B651C22554BC2001E8A41 /* KeepSwipingButton.swift */; };
 		15630373223853D800D3B1C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15630372223853D800D3B1C7 /* GoogleService-Info.plist */; };
 		157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B1F7C221044CC001B8483 /* RegistrationController.swift */; };
 		157B1F7F22104E1B001B8483 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B1F7E22104E1B001B8483 /* CustomTextField.swift */; };
@@ -53,6 +55,8 @@
 		150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		1537251621D10140009818D2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		154B65182253F938001E8A41 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
+		154B651A2254E77A001E8A41 /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
+		154B651C22554BC2001E8A41 /* KeepSwipingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingButton.swift; sourceTree = "<group>"; };
 		15630372223853D800D3B1C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		157B1F7C221044CC001B8483 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		157B1F7E22104E1B001B8483 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -141,6 +145,8 @@
 				15EC1DC9224B9BD0009E919C /* SettingsCell.swift */,
 				15EC1DCB224CC852009E919C /* AgeRangeCell.swift */,
 				154B65182253F938001E8A41 /* MatchView.swift */,
+				154B651A2254E77A001E8A41 /* SendMessageButton.swift */,
+				154B651C22554BC2001E8A41 /* KeepSwipingButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -333,6 +339,7 @@
 				15EC1E74224FF14F009E919C /* PhotoController.swift in Sources */,
 				15EC1DCE224D074C009E919C /* UserFetchingProtocol.swift in Sources */,
 				150C7A7821CF7B350081887D /* HomeController.swift in Sources */,
+				154B651B2254E77A001E8A41 /* SendMessageButton.swift in Sources */,
 				15B3F97521D95AE400B4D404 /* Comparable+Clamp.swift in Sources */,
 				150C7A8C21CF81D70081887D /* HomeBottomControlsStackView.swift in Sources */,
 				159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */,
@@ -350,6 +357,7 @@
 				150B9917221AEC9B002785AC /* RegistrationViewModel.swift in Sources */,
 				1537251721D10140009818D2 /* CardView.swift in Sources */,
 				150C7A8E21CF84BD0081887D /* TopNavigationStackView.swift in Sources */,
+				154B651D22554BC2001E8A41 /* KeepSwipingButton.swift in Sources */,
 				15EC1DCA224B9BD0009E919C /* SettingsCell.swift in Sources */,
 				15EC1E18224E4380009E919C /* SwipingPhotosController.swift in Sources */,
 				157B7B2721D51CB300474BEF /* User.swift in Sources */,
