@@ -9,10 +9,15 @@
 import UIKit
 import SDWebImage
 
+public enum DismissDirection: CGFloat {
+    case left = -1.0
+    case right = 1.0
+}
+
 // MARK: - CardViewDelegate
 protocol CardViewDelegate: AnyObject {
     func didTapMoreInfo(_ cardViewModel: CardViewModel)
-    func didRemoveCard(cardView: CardView, withDismissDirection: CGFloat)
+    func didRemoveCard(cardView: CardView, withDismissDirection: DismissDirection)
 }
 
 class CardView: UIView {
@@ -22,8 +27,6 @@ class CardView: UIView {
     fileprivate let barDeselectedColor = UIColor(white: 0, alpha: 0.1)
     
     // MARK: - PROPERTIES
-//    fileprivate let imageView = UIImageView(image: #imageLiteral(resourceName: "lady5c"))
-    
     fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewMode: true)
     
     fileprivate let gradientLayer = CAGradientLayer()
@@ -39,12 +42,6 @@ class CardView: UIView {
     
     var cardViewModel: CardViewModel! {
         didSet {
-//            let imageName = cardViewModel.imageUrls.first ?? ""
-//
-//            if let url = URL(string: imageName) {
-//                imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "photo_placeholder"), options: .continueInBackground)
-//            }
-            
             swipingPhotosController.cardViewModel = self.cardViewModel
             
             informationLabel.attributedText = cardViewModel.attributedString
@@ -102,8 +99,6 @@ class CardView: UIView {
         addSubview(swipingPhotosView)
         swipingPhotosView.fillSuperview()
         
-//        setupBarStackView()
-
         setupGradientLayer()
         
         addSubview(informationLabel)
@@ -119,30 +114,24 @@ class CardView: UIView {
     fileprivate func setupImageIndexObserver() {
         cardViewModel.imageIndexObserver = { [weak self] idx, imageUrl in
             
-            guard let `self` = self else { return }
-            
             print("Changing photo from viewModel")
-//            if let url = URL(string: imageUrl ?? "") {
-//
-//                self.imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "photo_placeholder"), options: .continueInBackground)
-//            }
             
-            self.barsStackView.arrangedSubviews.forEach {
-                $0.backgroundColor = self.barDeselectedColor
+            self?.barsStackView.arrangedSubviews.forEach {
+                $0.backgroundColor = self?.barDeselectedColor
             }
             
-            self.barsStackView.arrangedSubviews[idx].backgroundColor = .white
+            self?.barsStackView.arrangedSubviews[idx].backgroundColor = .white
         }
     }
     
-    fileprivate func setupBarStackView() {
-        addSubview(barsStackView)
-        
-        barsStackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor, padding: UIEdgeInsets.init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
-        
-        barsStackView.spacing = 4
-        barsStackView.distribution = .fillEqually
-    }
+//    fileprivate func setupBarStackView() {
+//        addSubview(barsStackView)
+//
+//        barsStackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor, padding: UIEdgeInsets.init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
+//
+//        barsStackView.spacing = 4
+//        barsStackView.distribution = .fillEqually
+//    }
     
     fileprivate func setupGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
@@ -183,12 +172,12 @@ class CardView: UIView {
     }
     
     fileprivate func handleEnded(_ gesture: UIPanGestureRecognizer) {
-        let dismissDirection: CGFloat = gesture.translation(in: nil).x > 0 ? 1 : -1
+        let dismissDirection: DismissDirection = gesture.translation(in: nil).x > 0 ? .right : .left
         let shouldDismissCard = abs(gesture.translation(in: nil).x) > threshold
         
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
             if shouldDismissCard {
-                self.frame = CGRect(x: dismissDirection*600, y: 0, width: self.frame.width, height: self.frame.height)
+                self.frame = CGRect(x: dismissDirection.rawValue*600, y: 0, width: self.frame.width, height: self.frame.height)
             } else {
                 self.transform = .identity
             }

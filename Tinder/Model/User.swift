@@ -9,6 +9,9 @@
 import UIKit
 
 struct User: ProducesCardViewModel {
+    
+    // MARK: - PROPERTIES
+    var uid: String?
     var name: String?
     var age: Int?
     var profession: String?
@@ -17,11 +20,10 @@ struct User: ProducesCardViewModel {
     var imageUrl2: String?
     var imageUrl3: String?
 
-    var uid: String?
-    
     var minSeekingAge: Int?
     var maxSeekingAge: Int?
-
+    
+    // MARK: - INIT
     init(dictionary: [String: Any]) {
         
         let name = dictionary["fullName"] as? String ?? ""
@@ -40,9 +42,10 @@ struct User: ProducesCardViewModel {
         self.maxSeekingAge = dictionary["maxSeekingAge"] as? Int
     }
     
+    // MARK: - HELPER METHODS
     func toCardViewModel() -> CardViewModel {
         
-        let ageString = age != nil ? "\(age!)" : "N\\A"
+        let ageString = age != nil ? "\(age!)" : #"N\A"#
         let professionString = profession != nil ? profession! : "Not available"
         
         let attributedText = NSMutableAttributedString(string: name ?? "", attributes: [.font: UIFont.systemFont(ofSize: 32, weight: .heavy)])

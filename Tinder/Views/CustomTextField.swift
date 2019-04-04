@@ -10,9 +10,11 @@ import UIKit
 
 class CustomTextField: UITextField {
     
+    // MARK: - PROPERTIES
     let padding: CGFloat
     let height: CGFloat
     
+    // MARK: - INIT
     init(padding: CGFloat, height: CGFloat) {
         self.padding = padding
         self.height = height
@@ -26,6 +28,7 @@ class CustomTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UITEXTFIELD OVERRIDES
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.insetBy(dx: padding, dy: 0)
     }

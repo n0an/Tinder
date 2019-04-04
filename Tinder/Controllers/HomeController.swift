@@ -309,8 +309,8 @@ extension HomeController: LoginControllerDelegate {
 }
 
 extension HomeController: CardViewDelegate {
-    func didRemoveCard(cardView: CardView, withDismissDirection: CGFloat) {
-        if withDismissDirection == 1 {
+    func didRemoveCard(cardView: CardView, withDismissDirection: DismissDirection) {
+        if withDismissDirection == .right {
             saveSwipeToFirestore(didLike: true)
         } else {
             saveSwipeToFirestore(didLike: false)
