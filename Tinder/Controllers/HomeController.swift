@@ -98,6 +98,25 @@ class HomeController: UIViewController {
     }
     
     var lastFetchedUser: User?
+    fileprivate let hud = JGProgressHUD(style: .dark)
+
+    
+    fileprivate func fetchCurrentUser() {
+        hud.textLabel.text = "Loading"
+        hud.show(in: view)
+        cardsDeckView.subviews.forEach({$0.removeFromSuperview()})
+        Firestore.firestore().fetchCurrentUser { (user, err) in
+            if let err = err {
+                print("Failed to fetch user:", err)
+                self.hud.dismiss()
+                return
+            }
+            self.user = user
+            
+            self.fetchSwipes()
+            
+        }
+    }
     
     fileprivate func fetchUsersFromFirestore() {
         
@@ -294,14 +313,6 @@ extension HomeController: SettingsControllerDelegate {
     func didSavedSettings() {
         
         fetchCurrentUser()
-    }
-}
-
-extension HomeController: UserFetchingProtocol {
-    
-    func didFetchedUser() {
-        fetchSwipes()
-        
     }
 }
 

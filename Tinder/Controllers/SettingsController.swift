@@ -66,7 +66,17 @@ class SettingsController: UITableViewController {
     var user: User?
     
     
-
+    fileprivate func fetchCurrentUser() {
+        Firestore.firestore().fetchCurrentUser { (user, err) in
+            if let err = err {
+                print("Failed to fetch user:", err)
+                return
+            }
+            self.user = user
+            self.loadUserPhotos()
+            self.tableView.reloadData()
+        }
+    }
     
     fileprivate func loadUserPhotos() {
         if let imageUrl = user?.imageUrl1, let url = URL(string: imageUrl) {
@@ -339,8 +349,6 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
                 } else {
                     self.user?.imageUrl3 = url?.absoluteString
                 }
-                
-                
             })
             
             print("Finished uploading")
@@ -350,13 +358,4 @@ extension SettingsController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
     }
-}
-
-extension SettingsController: UserFetchingProtocol {
-    func didFetchedUser() {
-        self.loadUserPhotos()
-        self.tableView.reloadData()
-    }
-    
-    
 }
