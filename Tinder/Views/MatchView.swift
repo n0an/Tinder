@@ -7,8 +7,36 @@
 //
 
 import UIKit
+import Firebase
 
 class MatchView: UIView {
+    
+    var cardUID: String! {
+        didSet {
+            Firestore.firestore().collection("users").document(cardUID).getDocument { (snapshot, err) in
+                if let err = err {
+                    print(err)
+                    return
+                }
+                
+                guard let dict = snapshot?.data() else { return }
+                
+                let user = User(dictionary: dict)
+                guard let url = URL(string: user.imageUrl1 ?? "") else { return }
+                self.cardUserImageView.sd_setImage(with: url)
+                
+                guard let currentUserImageUrl = URL(string: self.currentUser.imageUrl1 ?? "") else { return }
+                self.currentUserImageView.sd_setImage(with: currentUserImageUrl, completed: { (_, _, _, _) in
+                    self.setupAnimations()
+                })
+                
+                self.descriptionLabel.text = "You and \(user.name ?? "?") liked\neachother"
+                
+            }
+        }
+    }
+    
+    var currentUser: User!
     
     fileprivate let itsAMatchImageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "itsamatch"))
@@ -57,6 +85,8 @@ class MatchView: UIView {
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.white.cgColor
+        
+        imageView.alpha = 0
         return imageView
     }()
 
@@ -67,24 +97,38 @@ class MatchView: UIView {
         
         setupLayout()
         
-        setupAnimations()
+//        setupAnimations()
         
-        runFadeInAnimation()
+//        runFadeInAnimation()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("msg")
     }
     
+    lazy var views = [
+        itsAMatchImageView,
+        descriptionLabel,
+        sendMessageButton,
+        keepSwipingButton,
+        currentUserImageView,
+        cardUserImageView
+    ]
+    
     fileprivate func setupLayout() {
+        
+        views.forEach {
+            addSubview($0)
+            $0.alpha = 0
+        }
         
         layoutPerson(imageView: currentUserImageView, left: true)
         layoutPerson(imageView: cardUserImageView, left: false)
         
-        addSubview(itsAMatchImageView)
-        addSubview(descriptionLabel)
-        addSubview(sendMessageButton)
-        addSubview(keepSwipingButton)
+//        addSubview(itsAMatchImageView)
+//        addSubview(descriptionLabel)
+//        addSubview(sendMessageButton)
+//        addSubview(keepSwipingButton)
         
         itsAMatchImageView.anchor(top: nil, leading: nil, bottom: descriptionLabel.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 16, right: 0), size: .init(width: 300, height: 100))
         itsAMatchImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
@@ -100,6 +144,10 @@ class MatchView: UIView {
     }
     
     fileprivate func setupAnimations() {
+        
+        views.forEach {
+            $0.alpha = 1
+        }
         
         let angle: CGFloat = 30 * CGFloat.pi / 180
         
@@ -148,7 +196,7 @@ class MatchView: UIView {
     }
     
     fileprivate func layoutPerson(imageView: UIImageView, left: Bool) {
-        addSubview(imageView)
+//        addSubview(imageView)
         imageView.anchor(top: nil, leading: left ? nil: centerXAnchor, bottom: nil, trailing: left ? centerXAnchor : nil, padding: .init(top: 0, left: left ? 0 : 16, bottom: 0, right: left ? 16 : 0), size: .init(width: 140, height: 140))
         imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         imageView.layer.cornerRadius = 140 / 2
