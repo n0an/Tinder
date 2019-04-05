@@ -120,11 +120,6 @@ class HomeController: UIViewController {
     
     fileprivate func fetchUsersFromFirestore() {
         
-        let hud = JGProgressHUD(style: .dark)
-        
-        hud.textLabel.text = "Fetching Users"
-        hud.show(in: view)
-        
         let query = Firestore.firestore().collection("users")
             .whereField("age", isGreaterThanOrEqualTo: user?.minSeekingAge ?? SettingsController.defaultMinSeekingAge)
             .whereField("age", isLessThanOrEqualTo: user?.maxSeekingAge ?? SettingsController.defaultMaxSeekingAge)
@@ -132,7 +127,7 @@ class HomeController: UIViewController {
         topCardView = nil
         
         query.getDocuments { (snapshot, err) in
-            hud.dismiss()
+            self.hud.dismiss()
             
             if let err = err {
                 print("Failed to fetch", err.localizedDescription)

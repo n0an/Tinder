@@ -46,7 +46,6 @@ class MatchView: UIView {
     
     fileprivate let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "You and X have liked\neachother"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .white
@@ -97,9 +96,7 @@ class MatchView: UIView {
         
         setupLayout()
         
-//        setupAnimations()
         
-//        runFadeInAnimation()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -185,15 +182,6 @@ class MatchView: UIView {
         
     }
     
-    fileprivate func runFadeInAnimation() {
-        self.alpha = 0
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
-            self.alpha = 1
-        }) { (_) in
-            
-        }
-    }
     
     fileprivate func layoutPerson(imageView: UIImageView, left: Bool) {
 //        addSubview(imageView)
@@ -206,8 +194,14 @@ class MatchView: UIView {
         
         self.addSubview(visualEffectView)
         visualEffectView.fillSuperview()
-        
         visualEffectView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
+        
+        visualEffectView.alpha = 0
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.visualEffectView.alpha = 1
+        })
+        
     }
     
     @objc fileprivate func handleTapDismiss() {
@@ -216,7 +210,6 @@ class MatchView: UIView {
             self.alpha = 0
         }) { (_) in
             self.removeFromSuperview()
-
         }
     }
 }
