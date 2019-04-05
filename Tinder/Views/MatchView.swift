@@ -67,6 +67,8 @@ class MatchView: UIView {
         
         setupLayout()
         
+        setupAnimations()
+        
         runFadeInAnimation()
     }
     
@@ -93,6 +95,44 @@ class MatchView: UIView {
         
         keepSwipingButton.anchor(top: sendMessageButton.bottomAnchor, leading: sendMessageButton.leadingAnchor, bottom: nil, trailing: sendMessageButton.trailingAnchor, padding: .init(top: 16, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 60))
         
+        
+        
+    }
+    
+    fileprivate func setupAnimations() {
+        
+        let angle: CGFloat = 30 * CGFloat.pi / 180
+        
+        let rotationTransformationLeft = CGAffineTransform(rotationAngle: -angle)
+        let rotationTransformationRight = CGAffineTransform(rotationAngle: angle)
+
+        currentUserImageView.transform = rotationTransformationLeft.concatenating(CGAffineTransform(translationX: 200, y: 0))
+        cardUserImageView.transform = rotationTransformationRight.concatenating(CGAffineTransform(translationX: -200, y: 0))
+        
+        sendMessageButton.transform = CGAffineTransform(translationX: -500, y: 0)
+        keepSwipingButton.transform = CGAffineTransform(translationX: 500, y: 0)
+        
+        UIView.animateKeyframes(withDuration: 1.3, delay: 0, options: .calculationModeCubic, animations: {
+            
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.45, animations: {
+                self.currentUserImageView.transform = rotationTransformationLeft
+                self.cardUserImageView.transform = rotationTransformationRight
+
+            })
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4, animations: {
+                self.currentUserImageView.transform = .identity
+                self.cardUserImageView.transform = .identity
+            })
+            
+        }) { (_) in
+            
+        }
+        
+        UIView.animate(withDuration: 0.75, delay: 0.6 * 1.3, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            self.sendMessageButton.transform = .identity
+            self.keepSwipingButton.transform = .identity
+        })
         
         
     }
