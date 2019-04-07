@@ -9,26 +9,25 @@
 import UIKit
 import Firebase
 import JGProgressHUD
-//import SafariServices
 
 class HomeController: UIViewController {
     
+    // MARK: - PROPERTIES
     let topStackView = TopNavigationStackView()
     let cardsDeckView = UIView()
     let bottomControls = HomeBottomControlsStackView()
     
     var user: User?
-    
+    var lastFetchedUser: User?
+
     var swipes = [String: Int]()
-    
-//    let cardViewModels = ([
-//            User(name: "Kelly", age: 23, profession: "DJ", imageNames: ["kelly1", "kelly2", "kelly3"]),
-//            User(name: "Jane", age: 18, profession: "Teacher", imageNames: ["jane1", "jane2", "jane3"]),
-//            Advertiser(title: "Advertiser", brandName: "This is Ad", posterPhotoName: "slide_out_menu_poster")
-//        ] as [ProducesCardViewModel]).map {return $0.toCardViewModel()}.reversed()
-    
     var cardViewModels = [CardViewModel]()
     
+    var topCardView: CardView?
+    
+    fileprivate let hud = JGProgressHUD(style: .dark)
+    
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +41,7 @@ class HomeController: UIViewController {
         fetchCurrentUser()
     }
     
+    // MARK: - viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -52,22 +52,6 @@ class HomeController: UIViewController {
             present(navController, animated: true)
         }
     }
-    
-    @objc fileprivate func handleSettings() {
-        let settingsController = SettingsController()
-        
-        settingsController.delegate = self
-        let navController = UINavigationController(rootViewController: settingsController)
-        present(navController, animated: true, completion: nil)
-    }
-    
-    @objc fileprivate func handleRefresh() {
-        
-        cardsDeckView.subviews.forEach { $0.removeFromSuperview() }
-        
-        fetchUsersFromFirestore()
-    }
-    
     
     // MARK: - HELPER METHODS
     fileprivate func setupLayout() {
@@ -88,19 +72,6 @@ class HomeController: UIViewController {
         overallStackView.bringSubviewToFront(cardsDeckView)
     }
     
-    fileprivate func setupFirestoreUserCards() {
-        cardViewModels.forEach { (cardVM) in
-            let cardView = CardView(frame: .zero)
-            cardView.cardViewModel = cardVM
-            cardsDeckView.addSubview(cardView)
-            cardView.fillSuperview()
-        }
-    }
-    
-    var lastFetchedUser: User?
-    fileprivate let hud = JGProgressHUD(style: .dark)
-
-    
     fileprivate func fetchCurrentUser() {
         hud.textLabel.text = "Loading"
         hud.show(in: view)
@@ -114,7 +85,22 @@ class HomeController: UIViewController {
             self.user = user
             
             self.fetchSwipes()
+        }
+    }
+    
+    fileprivate func fetchSwipes() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, err) in
+            if let err = err {
+                print(err)
+                return
+            }
             
+            if let swipesData = snapshot?.data() as? [String: Int] {
+                self.swipes = swipesData
+            }
+            
+            self.fetchUsersFromFirestore()
         }
     }
     
@@ -144,7 +130,8 @@ class HomeController: UIViewController {
                 
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
                 
-//                let notSwiped = self.swipes[user.uid!] == nil
+                // FIXME: - Uncomment in production
+                //                let notSwiped = self.swipes[user.uid!] == nil
                 let notSwiped = true
                 
                 if  isNotCurrentUser && notSwiped {
@@ -162,22 +149,18 @@ class HomeController: UIViewController {
         }
     }
     
-    var topCardView: CardView?
-    
-    @objc fileprivate func handleDislike() {
-        saveSwipeToFirestore(didLike: false)
-        animateSwipe(isLike: false)
-    }
-
-    @objc fileprivate func handleLike() {
-        saveSwipeToFirestore(didLike: true)
-        animateSwipe(isLike: true)
+    fileprivate func setupCardFromUser(user: User) -> CardView {
+        let cardView = CardView(frame: .zero)
+        cardView.delegate = self
+        cardView.cardViewModel = user.toCardViewModel()
+        cardsDeckView.addSubview(cardView)
+        cardsDeckView.sendSubviewToBack(cardView)
+        cardView.fillSuperview()
+        return cardView
     }
     
     fileprivate func saveSwipeToFirestore(didLike: Bool) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        print(uid)
         
         guard let cardUID = topCardView?.cardViewModel.uid else { return }
         
@@ -231,7 +214,6 @@ class HomeController: UIViewController {
                     print("NO MATCH")
                 }
             }
-            
         }
     }
     
@@ -244,10 +226,8 @@ class HomeController: UIViewController {
         
         view.addSubview(matchView)
         matchView.fillSuperview()
-        
-
     }
-
+    
     fileprivate func animateSwipe(isLike: Bool) {
         
         let animationDuration = 0.5
@@ -276,47 +256,46 @@ class HomeController: UIViewController {
         CATransaction.commit()
     }
     
-    fileprivate func setupCardFromUser(user: User) -> CardView {
-        let cardView = CardView(frame: .zero)
-        cardView.delegate = self
-        cardView.cardViewModel = user.toCardViewModel()
-        cardsDeckView.addSubview(cardView)
-        cardsDeckView.sendSubviewToBack(cardView)
-        cardView.fillSuperview()
-        return cardView
+    // MARK: - ACTIONS
+    @objc fileprivate func handleSettings() {
+        let settingsController = SettingsController()
+        
+        settingsController.delegate = self
+        let navController = UINavigationController(rootViewController: settingsController)
+        present(navController, animated: true, completion: nil)
     }
     
-    fileprivate func fetchSwipes() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, err) in
-            if let err = err {
-                print(err)
-                return
-            }
-            
-            if let swipesData = snapshot?.data() as? [String: Int] {
-                self.swipes = swipesData
-            }
-            
-            self.fetchUsersFromFirestore()
-        }
+    @objc fileprivate func handleRefresh() {
+        cardsDeckView.subviews.forEach { $0.removeFromSuperview() }
+        fetchUsersFromFirestore()
+    }
+    
+    @objc fileprivate func handleDislike() {
+        saveSwipeToFirestore(didLike: false)
+        animateSwipe(isLike: false)
+    }
+
+    @objc fileprivate func handleLike() {
+        saveSwipeToFirestore(didLike: true)
+        animateSwipe(isLike: true)
     }
 }
 
+// MARK: - SettingsControllerDelegate
 extension HomeController: SettingsControllerDelegate {
-    
     func didSavedSettings() {
-        
         fetchCurrentUser()
     }
 }
 
+// MARK: - LoginControllerDelegate
 extension HomeController: LoginControllerDelegate {
     func didFinishLoggingIn() {
         fetchCurrentUser()
     }
 }
 
+// MARK: - CardViewDelegate
 extension HomeController: CardViewDelegate {
     func didRemoveCard(cardView: CardView, withDismissDirection: DismissDirection) {
         if withDismissDirection == .right {
@@ -336,6 +315,4 @@ extension HomeController: CardViewDelegate {
         
         present(vc, animated: true)
     }
-    
 }
-
