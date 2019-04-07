@@ -9,10 +9,13 @@
 import UIKit
 
 struct Advertiser: ProducesCardViewModel {
+    
+    // MARK: - PROPERTIES
     let title: String
     let brandName: String
     let posterPhotoName: String
     
+    // MARK: - HELPER METHODS
     func toCardViewModel() -> CardViewModel {
         
         let attributedText = NSMutableAttributedString(string: title, attributes: [.font: UIFont.systemFont(ofSize: 34, weight: .heavy)])

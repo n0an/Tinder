@@ -9,11 +9,6 @@
 import UIKit
 import SDWebImage
 
-public enum DismissDirection: CGFloat {
-    case left = -1.0
-    case right = 1.0
-}
-
 // MARK: - CardViewDelegate
 protocol CardViewDelegate: AnyObject {
     func didTapMoreInfo(_ cardViewModel: CardViewModel)
@@ -21,10 +16,6 @@ protocol CardViewDelegate: AnyObject {
 }
 
 class CardView: UIView {
-    
-    // MARK: - CONSTANTS
-    fileprivate let threshold: CGFloat = 100
-    fileprivate let barDeselectedColor = UIColor(white: 0, alpha: 0.1)
     
     // MARK: - PROPERTIES
     fileprivate let swipingPhotosController = SwipingPhotosController(isCardViewMode: true)
@@ -49,7 +40,7 @@ class CardView: UIView {
             
             (0..<cardViewModel.imageUrls.count).forEach { (_) in
                 let barView = UIView()
-                barView.backgroundColor = barDeselectedColor
+                barView.backgroundColor = cardViewBarDeselectedColor
                 barsStackView.addArrangedSubview(barView)
             }
             barsStackView.arrangedSubviews.first?.backgroundColor = .white
@@ -117,7 +108,7 @@ class CardView: UIView {
             print("Changing photo from viewModel")
             
             self?.barsStackView.arrangedSubviews.forEach {
-                $0.backgroundColor = self?.barDeselectedColor
+                $0.backgroundColor = cardViewBarDeselectedColor
             }
             
             self?.barsStackView.arrangedSubviews[idx].backgroundColor = .white
@@ -173,7 +164,7 @@ class CardView: UIView {
     
     fileprivate func handleEnded(_ gesture: UIPanGestureRecognizer) {
         let dismissDirection: DismissDirection = gesture.translation(in: nil).x > 0 ? .right : .left
-        let shouldDismissCard = abs(gesture.translation(in: nil).x) > threshold
+        let shouldDismissCard = abs(gesture.translation(in: nil).x) > cardViewDismissThreshold
         
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
             if shouldDismissCard {
