@@ -23,7 +23,7 @@ class CardView: UIView {
     fileprivate let gradientLayer = CAGradientLayer()
     fileprivate let informationLabel = UILabel()
     
-    fileprivate let barsStackView = UIStackView()
+//    fileprivate let barsStackView = UIStackView()
     
     var imageIndex = 0
     
@@ -38,12 +38,12 @@ class CardView: UIView {
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
             
-            (0..<cardViewModel.imageUrls.count).forEach { (_) in
-                let barView = UIView()
-                barView.backgroundColor = cardViewBarDeselectedColor
-                barsStackView.addArrangedSubview(barView)
-            }
-            barsStackView.arrangedSubviews.first?.backgroundColor = .white
+//            (0..<cardViewModel.imageUrls.count).forEach { (_) in
+//                let barView = UIView()
+//                barView.backgroundColor = cardViewBarDeselectedColor
+//                barsStackView.addArrangedSubview(barView)
+//            }
+//            barsStackView.arrangedSubviews.first?.backgroundColor = .white
             
             setupImageIndexObserver()
         }
@@ -107,11 +107,11 @@ class CardView: UIView {
             
             print("Changing photo from viewModel")
             
-            self?.barsStackView.arrangedSubviews.forEach {
-                $0.backgroundColor = cardViewBarDeselectedColor
-            }
+//            self?.barsStackView.arrangedSubviews.forEach {
+//                $0.backgroundColor = cardViewBarDeselectedColor
+//            }
             
-            self?.barsStackView.arrangedSubviews[idx].backgroundColor = .white
+//            self?.barsStackView.arrangedSubviews[idx].backgroundColor = .white
         }
     }
     
