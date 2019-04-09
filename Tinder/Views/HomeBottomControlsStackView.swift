@@ -33,20 +33,9 @@ class HomeBottomControlsStackView: UIStackView {
         distribution = .fillEqually
         heightAnchor.constraint(equalToConstant: 100).isActive = true
         
-//        let buttons = [#imageLiteral(resourceName: "3 1"), #imageLiteral(resourceName: "3 2"), #imageLiteral(resourceName: "3 3"), #imageLiteral(resourceName: "3 4"), #imageLiteral(resourceName: "3 5")].map { (img) -> UIView in
-//            let button = UIButton(type: .system)
-//            button.setImage(img.withRenderingMode(.alwaysOriginal), for: .normal)
-//            return button
-//        }
-//
-//        buttons.forEach { (v) in
-//            addArrangedSubview(v)
-//        }
-        
         [refreshButton, dislikeButton, superLikeButton, likeButton, specialButton].forEach { button in
             self.addArrangedSubview(button)
         }
-        
     }
     
     required init(coder: NSCoder) {

@@ -23,8 +23,6 @@ class CardView: UIView {
     fileprivate let gradientLayer = CAGradientLayer()
     fileprivate let informationLabel = UILabel()
     
-//    fileprivate let barsStackView = UIStackView()
-    
     var imageIndex = 0
     
     weak var delegate: CardViewDelegate?
@@ -37,15 +35,6 @@ class CardView: UIView {
             
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
-            
-//            (0..<cardViewModel.imageUrls.count).forEach { (_) in
-//                let barView = UIView()
-//                barView.backgroundColor = cardViewBarDeselectedColor
-//                barsStackView.addArrangedSubview(barView)
-//            }
-//            barsStackView.arrangedSubviews.first?.backgroundColor = .white
-            
-            setupImageIndexObserver()
         }
     }
     
@@ -75,7 +64,7 @@ class CardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - VIEW LIFECYCLE
+    // MARK: - UIVIEW LIFECYCLE
     override func layoutSubviews() {
         gradientLayer.frame = self.frame
     }
@@ -101,28 +90,6 @@ class CardView: UIView {
         addSubview(moreInfoButton)
         moreInfoButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
     }
-    
-    fileprivate func setupImageIndexObserver() {
-        cardViewModel.imageIndexObserver = { [weak self] idx, imageUrl in
-            
-            print("Changing photo from viewModel")
-            
-//            self?.barsStackView.arrangedSubviews.forEach {
-//                $0.backgroundColor = cardViewBarDeselectedColor
-//            }
-            
-//            self?.barsStackView.arrangedSubviews[idx].backgroundColor = .white
-        }
-    }
-    
-//    fileprivate func setupBarStackView() {
-//        addSubview(barsStackView)
-//
-//        barsStackView.anchor(top: self.topAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor, padding: UIEdgeInsets.init(top: 8, left: 8, bottom: 0, right: 8), size: .init(width: 0, height: 4))
-//
-//        barsStackView.spacing = 4
-//        barsStackView.distribution = .fillEqually
-//    }
     
     fileprivate func setupGradientLayer() {
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
