@@ -26,6 +26,8 @@
 		157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B1F7C221044CC001B8483 /* RegistrationController.swift */; };
 		157B1F7F22104E1B001B8483 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B1F7E22104E1B001B8483 /* CustomTextField.swift */; };
 		157B7B2721D51CB300474BEF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B7B2621D51CB300474BEF /* User.swift */; };
+		158292C1225D311E0065600F /* SettingsTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158292C0225D311E0065600F /* SettingsTextField.swift */; };
+		158292C3225D31630065600F /* AgeRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158292C2225D31630065600F /* AgeRangeSlider.swift */; };
 		159594EF2239107F003C3AB9 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159594EE2239107F003C3AB9 /* Bindable.swift */; };
 		159E2DF221D66D74004546B0 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159E2DF121D66D56004546B0 /* CardViewModel.swift */; };
 		159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159E2DF421D66F9F004546B0 /* Advertiser.swift */; };
@@ -64,6 +66,8 @@
 		157B1F7C221044CC001B8483 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		157B1F7E22104E1B001B8483 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		157B7B2621D51CB300474BEF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		158292C0225D311E0065600F /* SettingsTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextField.swift; sourceTree = "<group>"; };
+		158292C2225D31630065600F /* AgeRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeRangeSlider.swift; sourceTree = "<group>"; };
 		159594EE2239107F003C3AB9 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		159E2DF121D66D56004546B0 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		159E2DF421D66F9F004546B0 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
@@ -142,8 +146,10 @@
 		150C7A8A21CF81AE0081887D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1537251621D10140009818D2 /* CardView.swift */,
 				157B1F7E22104E1B001B8483 /* CustomTextField.swift */,
+				158292C0225D311E0065600F /* SettingsTextField.swift */,
+				158292C2225D31630065600F /* AgeRangeSlider.swift */,
+				1537251621D10140009818D2 /* CardView.swift */,
 				150C7A8B21CF81D70081887D /* HomeBottomControlsStackView.swift */,
 				150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */,
 				15EC1DC9224B9BD0009E919C /* SettingsCell.swift */,
@@ -338,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				158292C1225D311E0065600F /* SettingsTextField.swift in Sources */,
 				15EC1DD2224D57AF009E919C /* LoginController.swift in Sources */,
 				15EC1E74224FF14F009E919C /* PhotoController.swift in Sources */,
 				150C7A7821CF7B350081887D /* HomeController.swift in Sources */,
@@ -365,6 +372,7 @@
 				15EC1E18224E4380009E919C /* SwipingPhotosController.swift in Sources */,
 				157B7B2721D51CB300474BEF /* User.swift in Sources */,
 				1567014E225A8FA900089B75 /* Constants.swift in Sources */,
+				158292C3225D31630065600F /* AgeRangeSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

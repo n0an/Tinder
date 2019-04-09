@@ -10,12 +10,7 @@ import UIKit
 
 class AgeRangeCell: UITableViewCell {
     
-    class AgeRangeLabel: UILabel {
-        override var intrinsicContentSize: CGSize {
-            return .init(width: 80, height: 0)
-        }
-    }
-    
+    // MARK: - PROPERTIES
     let minSlider: UISlider = {
         let slider = UISlider()
         slider.value = 18
@@ -44,6 +39,7 @@ class AgeRangeCell: UITableViewCell {
         return label
     }()
 
+    // MARK: - INIT
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
