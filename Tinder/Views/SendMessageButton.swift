@@ -10,6 +10,7 @@ import UIKit
 
 class SendMessageButton: UIButton {
 
+    // MARK: - DRAW
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -28,5 +29,4 @@ class SendMessageButton: UIButton {
         
         gradientLayer.frame = rect
     }
-
 }

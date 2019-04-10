@@ -9,6 +9,8 @@
 import UIKit
 
 class AgeRangeLabel: UILabel {
+    
+    // MARK: - UILABEL OVERRIDES
     override var intrinsicContentSize: CGSize {
         return .init(width: 80, height: 0)
     }

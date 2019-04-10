@@ -11,6 +11,7 @@ import Firebase
 
 class MatchView: UIView {
     
+    // MARK: - PROPERTY OBSERVER
     var cardUID: String! {
         didSet {
             Firestore.firestore().collection("users").document(cardUID).getDocument { (snapshot, err) in
@@ -31,12 +32,21 @@ class MatchView: UIView {
                 })
                 
                 self.descriptionLabel.text = "You and \(user.name ?? "?") liked\neachother"
-                
             }
         }
     }
     
+    // MARK: - PROPERTIES
     var currentUser: User!
+    
+    lazy var views = [
+        itsAMatchImageView,
+        descriptionLabel,
+        sendMessageButton,
+        keepSwipingButton,
+        currentUserImageView,
+        cardUserImageView
+    ]
     
     fileprivate let itsAMatchImageView: UIImageView = {
         let iv = UIImageView(image: #imageLiteral(resourceName: "itsamatch"))
@@ -89,29 +99,19 @@ class MatchView: UIView {
         return imageView
     }()
 
+    // MARK: - INIT
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupBlurView()
-        
         setupLayout()
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("msg")
     }
     
-    lazy var views = [
-        itsAMatchImageView,
-        descriptionLabel,
-        sendMessageButton,
-        keepSwipingButton,
-        currentUserImageView,
-        cardUserImageView
-    ]
-    
+    // MARK: - HELPER METHODS
     fileprivate func setupLayout() {
         
         views.forEach {
@@ -122,11 +122,6 @@ class MatchView: UIView {
         layoutPerson(imageView: currentUserImageView, left: true)
         layoutPerson(imageView: cardUserImageView, left: false)
         
-//        addSubview(itsAMatchImageView)
-//        addSubview(descriptionLabel)
-//        addSubview(sendMessageButton)
-//        addSubview(keepSwipingButton)
-        
         itsAMatchImageView.anchor(top: nil, leading: nil, bottom: descriptionLabel.topAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 16, right: 0), size: .init(width: 300, height: 100))
         itsAMatchImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         
@@ -135,9 +130,6 @@ class MatchView: UIView {
         sendMessageButton.anchor(top: currentUserImageView.bottomAnchor, leading: self.leadingAnchor, bottom: nil, trailing: self.trailingAnchor, padding: .init(top: 32, left: 48, bottom: 0, right: 48), size: .init(width: 0, height: 60))
         
         keepSwipingButton.anchor(top: sendMessageButton.bottomAnchor, leading: sendMessageButton.leadingAnchor, bottom: nil, trailing: sendMessageButton.trailingAnchor, padding: .init(top: 16, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 60))
-        
-        
-        
     }
     
     fileprivate func setupAnimations() {
@@ -146,7 +138,7 @@ class MatchView: UIView {
             $0.alpha = 1
         }
         
-        let angle: CGFloat = 30 * CGFloat.pi / 180
+        let angle: CGFloat = 30 * .pi / 180
         
         let rotationTransformationLeft = CGAffineTransform(rotationAngle: -angle)
         let rotationTransformationRight = CGAffineTransform(rotationAngle: angle)
@@ -162,36 +154,27 @@ class MatchView: UIView {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.45, animations: {
                 self.currentUserImageView.transform = rotationTransformationLeft
                 self.cardUserImageView.transform = rotationTransformationRight
-
             })
             
             UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4, animations: {
                 self.currentUserImageView.transform = .identity
                 self.cardUserImageView.transform = .identity
             })
-            
-        }) { (_) in
-            
-        }
+        })
         
         UIView.animate(withDuration: 0.75, delay: 0.6 * 1.3, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
             self.sendMessageButton.transform = .identity
             self.keepSwipingButton.transform = .identity
         })
-        
-        
     }
     
-    
     fileprivate func layoutPerson(imageView: UIImageView, left: Bool) {
-//        addSubview(imageView)
         imageView.anchor(top: nil, leading: left ? nil: centerXAnchor, bottom: nil, trailing: left ? centerXAnchor : nil, padding: .init(top: 0, left: left ? 0 : 16, bottom: 0, right: left ? 16 : 0), size: .init(width: 140, height: 140))
         imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         imageView.layer.cornerRadius = 140 / 2
     }
     
     fileprivate func setupBlurView() {
-        
         self.addSubview(visualEffectView)
         visualEffectView.fillSuperview()
         visualEffectView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
@@ -201,9 +184,9 @@ class MatchView: UIView {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.visualEffectView.alpha = 1
         })
-        
     }
     
+    // MARK: - ACTIONS
     @objc fileprivate func handleTapDismiss() {
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {

@@ -10,6 +10,7 @@ import UIKit
 
 class KeepSwipingButton: UIButton {
 
+    // MARK: - DRAW
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -23,16 +24,12 @@ class KeepSwipingButton: UIButton {
         
         let cornerRadius = rect.height / 2
         
-        let maskLayer = CAShapeLayer()
-        
         let maskPath = CGMutablePath()
-        
         maskPath.addPath(UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).cgPath)
-        
         maskPath.addPath(UIBezierPath(roundedRect: rect.insetBy(dx: 2, dy: 2), cornerRadius: cornerRadius).cgPath)
         
+        let maskLayer = CAShapeLayer()
         maskLayer.path = maskPath
-        
         maskLayer.fillRule = .evenOdd
         
         gradientLayer.mask = maskLayer
@@ -44,5 +41,4 @@ class KeepSwipingButton: UIButton {
         
         gradientLayer.frame = rect
     }
-
 }
