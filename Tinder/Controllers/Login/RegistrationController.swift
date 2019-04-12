@@ -13,6 +13,7 @@ import JGProgressHUD
 
 class RegistrationController: UIViewController {
     
+    // MARK: - PROPERTIES
     weak var delegate: LoginControllerDelegate?
     
     let selectPhotoButton: UIButton = {
