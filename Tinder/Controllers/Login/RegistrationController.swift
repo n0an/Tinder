@@ -16,6 +16,9 @@ class RegistrationController: UIViewController {
     // MARK: - PROPERTIES
     weak var delegate: LoginControllerDelegate?
     
+    let registeringHUD = JGProgressHUD(style: .dark)
+
+    // MARK: - SUBVIEWS
     let selectPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Select Photo", for: .normal)
@@ -40,18 +43,6 @@ class RegistrationController: UIViewController {
         button.addTarget(self, action: #selector(handleGoToLogin), for: .touchUpInside)
         return button
     }()
-    
-    @objc fileprivate func handleGoToLogin() {
-        let loginController = LoginController()
-        loginController.delegate = delegate
-        navigationController?.pushViewController(loginController, animated: true)
-    }
-    
-    @objc func handleSelectPhoto() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        present(imagePickerController, animated: true)
-    }
     
     let fullNameTextField: CustomTextField = {
         let tf = CustomTextField(padding: 24, height: 50)
@@ -95,35 +86,6 @@ class RegistrationController: UIViewController {
         return button
     }()
     
-    let registeringHUD = JGProgressHUD(style: .dark)
-    
-    @objc fileprivate func handleRegister() {
-        self.handleTapDismiss()
-        
-        
-        registrationViewModel.performRegistration { [weak self] (err) in
-            if let err = err {
-                self?.showHudWithError(error: err)
-                return
-            }
-            
-            print("Finished registering our user")
-            
-            self?.dismiss(animated: true, completion: {
-                self?.delegate?.didFinishLoggingIn()
-            })
-        }
-    }
-    
-    fileprivate func showHudWithError(error: Error) {
-        registeringHUD.dismiss()
-        let hud = JGProgressHUD(style: .dark)
-        hud.textLabel.text = "Failed registration"
-        hud.detailTextLabel.text = error.localizedDescription
-        hud.show(in: self.view)
-        hud.dismiss(afterDelay: 4)
-    }
-    
     lazy var verticalStackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [
             fullNameTextField,
@@ -144,8 +106,10 @@ class RegistrationController: UIViewController {
     
     let gradientLayer = CAGradientLayer()
     
+    // MARK: - VIEWMODEL
     let registrationViewModel = RegistrationViewModel()
 
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -156,12 +120,13 @@ class RegistrationController: UIViewController {
         setupRegistrationViewModelObserver()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         
-//        NotificationCenter.default.removeObserver(self)
+        gradientLayer.frame = view.bounds
     }
     
+    // MARK: - HELPER METHODS
     fileprivate func setupNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -178,12 +143,10 @@ class RegistrationController: UIViewController {
             
             self?.registerButton.isEnabled = isFormValid
             self?.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
-            
         }
         
         registrationViewModel.bindableImage.bind { [unowned self] (img) in
             self.selectPhotoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
-
         }
         
         registrationViewModel.bindableIsRegistering.bind { [unowned self] (isRegistering) in
@@ -194,50 +157,15 @@ class RegistrationController: UIViewController {
                 self.registeringHUD.dismiss()
             }
         }
-       
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        gradientLayer.frame = view.bounds
-    }
-    
-    @objc fileprivate func handleKeyboardShow(notification: Notification) {
-        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        
-        let keyboardFrame = value.cgRectValue
-        
-        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
-        
-        let difference = keyboardFrame.height - bottomSpace
-        self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
-        
-    }
-    
-    @objc fileprivate func handleKeyboardHide(notification: Notification) {
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.transform = .identity
-        }, completion: nil)
-    }
-    
-    @objc fileprivate func handleTextChange(textField: UITextField) {
-        if textField == fullNameTextField {
-            registrationViewModel.fullName = textField.text
-        } else if textField == emailTextField {
-            registrationViewModel.email = textField.text
-        } else {
-            registrationViewModel.password = textField.text
-        }
-    }
-    
-    fileprivate func setupTapGesture() {
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
-    }
-    
-    @objc fileprivate func handleTapDismiss() {
-        self.view.endEditing(true)
+    fileprivate func showHudWithError(error: Error) {
+        registeringHUD.dismiss()
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Failed registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 4)
     }
     
     fileprivate func setupGradientLayer() {
@@ -265,7 +193,7 @@ class RegistrationController: UIViewController {
     
     fileprivate func setupLayout() {
         navigationController?.isNavigationBarHidden = true
-
+        
         view.addSubview(overallStackView)
         
         setupStackViewAxis(horizontal: self.traitCollection.verticalSizeClass == .compact)
@@ -280,8 +208,75 @@ class RegistrationController: UIViewController {
         view.addSubview(goToLoginButton)
         goToLoginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
+    
+    fileprivate func setupTapGesture() {
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapDismiss)))
+    }
+    
+    // MARK: - ACTIONS
+    @objc fileprivate func handleKeyboardShow(notification: Notification) {
+        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        
+        let keyboardFrame = value.cgRectValue
+        
+        let bottomSpace = view.frame.height - overallStackView.frame.origin.y - overallStackView.frame.height
+        
+        let difference = keyboardFrame.height - bottomSpace
+        self.view.transform = CGAffineTransform(translationX: 0, y: -difference - 8)
+    }
+    
+    @objc fileprivate func handleKeyboardHide(notification: Notification) {
+        
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.transform = .identity
+        }, completion: nil)
+    }
+    
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        if textField == fullNameTextField {
+            registrationViewModel.fullName = textField.text
+        } else if textField == emailTextField {
+            registrationViewModel.email = textField.text
+        } else {
+            registrationViewModel.password = textField.text
+        }
+    }
+    
+    @objc fileprivate func handleTapDismiss() {
+        self.view.endEditing(true)
+    }
+    
+    @objc fileprivate func handleGoToLogin() {
+        let loginController = LoginController()
+        loginController.delegate = delegate
+        navigationController?.pushViewController(loginController, animated: true)
+    }
+    
+    @objc func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
+    
+    @objc fileprivate func handleRegister() {
+        self.handleTapDismiss()
+        
+        registrationViewModel.performRegistration { [weak self] (err) in
+            if let err = err {
+                self?.showHudWithError(error: err)
+                return
+            }
+            
+            print("Finished registering our user")
+            
+            self?.dismiss(animated: true, completion: {
+                self?.delegate?.didFinishLoggingIn()
+            })
+        }
+    }
 }
 
+// MARK: - UIImagePickerControllerDelegate
 extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -297,5 +292,3 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
         dismiss(animated: true, completion: nil)
     }
 }
-
-
