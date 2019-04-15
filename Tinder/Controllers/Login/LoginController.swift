@@ -9,14 +9,17 @@
 import UIKit
 import JGProgressHUD
 
+// MARK: - LoginControllerDelegate
 protocol LoginControllerDelegate: AnyObject {
     func didFinishLoggingIn()
 }
 
 class LoginController: UIViewController {
     
+    // MARK: - PROPERTIES
     weak var delegate: LoginControllerDelegate?
     
+    // MARK: - SUBVIEWS
     let emailTextField: CustomTextField = {
         let tf = CustomTextField(padding: 24, height: 50)
         tf.placeholder = "Enter email"
