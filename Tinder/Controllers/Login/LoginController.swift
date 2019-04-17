@@ -18,7 +18,12 @@ class LoginController: UIViewController {
     
     // MARK: - PROPERTIES
     weak var delegate: LoginControllerDelegate?
+
+    let gradientLayer = CAGradientLayer()
     
+    fileprivate let loginViewModel = LoginViewModel()
+    fileprivate let loginHUD = JGProgressHUD(style: .dark)
+
     // MARK: - SUBVIEWS
     let emailTextField: CustomTextField = {
         let tf = CustomTextField(padding: 24, height: 50)
@@ -46,14 +51,6 @@ class LoginController: UIViewController {
         return sv
     }()
     
-    @objc fileprivate func handleTextChange(textField: UITextField) {
-        if textField == emailTextField {
-            loginViewModel.email = textField.text
-        } else {
-            loginViewModel.password = textField.text
-        }
-    }
-    
     let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
@@ -68,21 +65,6 @@ class LoginController: UIViewController {
         return button
     }()
     
-    @objc fileprivate func handleLogin() {
-        loginViewModel.performLogin { (err) in
-            self.loginHUD.dismiss()
-            if let err = err {
-                print("Failed to log in:", err)
-                return
-            }
-            
-            print("Logged in successfully")
-            self.dismiss(animated: true, completion: {
-                self.delegate?.didFinishLoggingIn()
-            })
-        }
-    }
-    
     fileprivate let backToRegisterButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Go back", for: .normal)
@@ -92,10 +74,7 @@ class LoginController: UIViewController {
         return button
     }()
     
-    @objc fileprivate func handleBack() {
-        navigationController?.popViewController(animated: true)
-    }
-
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,9 +84,13 @@ class LoginController: UIViewController {
         setupBindables()
     }
     
-    fileprivate let loginViewModel = LoginViewModel()
-    fileprivate let loginHUD = JGProgressHUD(style: .dark)
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        gradientLayer.frame = view.bounds
+    }
+    
+    // MARK: - HELPER METHODS
     fileprivate func setupBindables() {
         loginViewModel.isFormValid.bind { [unowned self] (isFormValid) in
             guard let isFormValid = isFormValid else { return }
@@ -123,13 +106,6 @@ class LoginController: UIViewController {
                 self.loginHUD.dismiss()
             }
         }
-    }
-    
-    let gradientLayer = CAGradientLayer()
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        gradientLayer.frame = view.bounds
     }
     
     fileprivate func setupGradientLayer() {
@@ -151,5 +127,32 @@ class LoginController: UIViewController {
         view.addSubview(backToRegisterButton)
         backToRegisterButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
-
+    
+    // MARK: - ACTIONS
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        if textField == emailTextField {
+            loginViewModel.email = textField.text
+        } else {
+            loginViewModel.password = textField.text
+        }
+    }
+    
+    @objc fileprivate func handleLogin() {
+        loginViewModel.performLogin { (err) in
+            self.loginHUD.dismiss()
+            if let err = err {
+                print("Failed to log in:", err)
+                return
+            }
+            
+            print("Logged in successfully")
+            self.dismiss(animated: true, completion: {
+                self.delegate?.didFinishLoggingIn()
+            })
+        }
+    }
+    
+    @objc fileprivate func handleBack() {
+        navigationController?.popViewController(animated: true)
+    }
 }
