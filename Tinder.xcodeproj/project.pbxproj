@@ -13,9 +13,9 @@
 		150C7A7B21CF7B350081887D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 150C7A7921CF7B350081887D /* Main.storyboard */; };
 		150C7A7D21CF7B370081887D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 150C7A7C21CF7B370081887D /* Assets.xcassets */; };
 		150C7A8021CF7B370081887D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 150C7A7E21CF7B370081887D /* LaunchScreen.storyboard */; };
-		150C7A8921CF7E170081887D /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7A8821CF7E120081887D /* Extensions+UIView.swift */; };
 		150C7A8C21CF81D70081887D /* HomeBottomControlsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7A8B21CF81D70081887D /* HomeBottomControlsStackView.swift */; };
 		150C7A8E21CF84BD0081887D /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */; };
+		153085FC2370C00E003849FE /* MatchesMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153085FB2370C00E003849FE /* MatchesMessagesController.swift */; };
 		1537251721D10140009818D2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1537251621D10140009818D2 /* CardView.swift */; };
 		1548E972225772C200CC36D1 /* Firebase+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1548E971225772C200CC36D1 /* Firebase+User.swift */; };
 		154B65192253F938001E8A41 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B65182253F938001E8A41 /* MatchView.swift */; };
@@ -53,9 +53,9 @@
 		150C7A7C21CF7B370081887D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		150C7A7F21CF7B370081887D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		150C7A8121CF7B370081887D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		150C7A8821CF7E120081887D /* Extensions+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
 		150C7A8B21CF81D70081887D /* HomeBottomControlsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomControlsStackView.swift; sourceTree = "<group>"; };
 		150C7A8D21CF84BD0081887D /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
+		153085FB2370C00E003849FE /* MatchesMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesMessagesController.swift; sourceTree = "<group>"; };
 		1537251621D10140009818D2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1548E971225772C200CC36D1 /* Firebase+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+User.swift"; sourceTree = "<group>"; };
 		154B65182253F938001E8A41 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
@@ -136,7 +136,6 @@
 		150C7A8721CF7DD80081887D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				150C7A8821CF7E120081887D /* Extensions+UIView.swift */,
 				15B3F97421D95AE400B4D404 /* Comparable+Clamp.swift */,
 				1548E971225772C200CC36D1 /* Firebase+User.swift */,
 			);
@@ -161,6 +160,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		153085FA2370BFD2003849FE /* MatchesAndMessages */ = {
+			isa = PBXGroup;
+			children = (
+				153085FB2370C00E003849FE /* MatchesMessagesController.swift */,
+			);
+			path = MatchesAndMessages;
+			sourceTree = "<group>";
+		};
 		157B7B2521D51CA100474BEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +189,7 @@
 		159E2DF321D66F83004546B0 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				153085FA2370BFD2003849FE /* MatchesAndMessages */,
 				15EC1DCF224D5582009E919C /* Login */,
 				15EC1DD6224E08C2009E919C /* User Details */,
 				150C7A7721CF7B350081887D /* HomeController.swift */,
@@ -358,12 +366,12 @@
 				15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */,
 				154B65192253F938001E8A41 /* MatchView.swift in Sources */,
 				15EC1DD3224D57AF009E919C /* LoginViewModel.swift in Sources */,
-				150C7A8921CF7E170081887D /* Extensions+UIView.swift in Sources */,
 				15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */,
 				157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */,
 				159E2DF221D66D74004546B0 /* CardViewModel.swift in Sources */,
 				159594EF2239107F003C3AB9 /* Bindable.swift in Sources */,
 				157B1F7F22104E1B001B8483 /* CustomTextField.swift in Sources */,
+				153085FC2370C00E003849FE /* MatchesMessagesController.swift in Sources */,
 				150B9917221AEC9B002785AC /* RegistrationViewModel.swift in Sources */,
 				1537251721D10140009818D2 /* CardView.swift in Sources */,
 				150C7A8E21CF84BD0081887D /* TopNavigationStackView.swift in Sources */,

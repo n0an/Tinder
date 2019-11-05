@@ -31,7 +31,12 @@ class HomeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.isHidden = true
+        
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        topStackView.messageButton.addTarget(self, action: #selector(handleMessages), for: .touchUpInside)
+
+        
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         bottomControls.dislikeButton.addTarget(self, action: #selector(handleDislike), for: .touchUpInside)
@@ -266,6 +271,12 @@ class HomeController: UIViewController {
         settingsController.delegate = self
         let navController = UINavigationController(rootViewController: settingsController)
         present(navController, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func handleMessages() {
+        let vc = MatchesMessagesController(collectionViewLayout: UICollectionViewFlowLayout())
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc fileprivate func handleRefresh() {
