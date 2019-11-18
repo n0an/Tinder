@@ -20,6 +20,7 @@
 #include <string>
 
 #include "Firestore/core/src/firebase/firestore/model/document_key.h"
+#include "Firestore/core/src/firebase/firestore/model/mutation_batch.h"
 #include "Firestore/core/src/firebase/firestore/model/resource_path.h"
 #include "Firestore/core/src/firebase/firestore/model/types.h"
 #include "absl/strings/string_view.h"
@@ -77,6 +78,11 @@ namespace local {
 // remote_documents:
 //   - table_name: string = "remote_document"
 //   - path: ResourcePath
+//
+// collection_parents:
+//   - table_name: string = "collection_parent"
+//   - collectionId: string
+//   - parent: ResourcePath
 
 /**
  * Parses the given key and returns a human readable description of its
@@ -135,9 +141,8 @@ class LevelDbMutationKey {
   }
 
  private:
-  // Deliberately uninitialized: will be assigned in Decode
   std::string user_id_;
-  model::BatchId batch_id_;
+  model::BatchId batch_id_ = model::kBatchIdUnknown;
 };
 
 /**
@@ -204,10 +209,9 @@ class LevelDbDocumentMutationKey {
   }
 
  private:
-  // Deliberately uninitialized: will be assigned in Decode
   std::string user_id_;
   model::DocumentKey document_key_;
-  model::BatchId batch_id_;
+  model::BatchId batch_id_ = model::kBatchIdUnknown;
 };
 
 /**
@@ -343,7 +347,7 @@ class LevelDbQueryTargetKey {
  private:
   // Deliberately uninitialized: will be assigned in Decode
   std::string canonical_id_;
-  model::TargetId target_id_;
+  model::TargetId target_id_ = 0;
 };
 
 /**
@@ -391,7 +395,7 @@ class LevelDbTargetDocumentKey {
 
  private:
   // Deliberately uninitialized: will be assigned in Decode
-  model::TargetId target_id_;
+  model::TargetId target_id_ = 0;
   model::DocumentKey document_key_;
 };
 
@@ -518,6 +522,59 @@ class LevelDbRemoteDocumentKey {
  private:
   // Deliberately uninitialized: will be assigned in Decode
   model::DocumentKey document_key_;
+};
+
+/**
+ * A key in the collection parents index, which stores an association between a
+ * Collection ID (e.g. 'messages') to a parent path (e.g. '/chats/123') that
+ * contains it as a (sub)collection. This is used to efficiently find all
+ * collections to query when performing a Collection Group query. Note that the
+ * parent path will be an empty path in the case of root-level collections.
+ */
+class LevelDbCollectionParentKey {
+ public:
+  /**
+   * Creates a key prefix that points just before the first key in the table.
+   */
+  static std::string KeyPrefix();
+
+  /**
+   * Creates a key prefix that points just before the first key for the given
+   * collection_id.
+   */
+  static std::string KeyPrefix(absl::string_view collection_id);
+
+  /**
+   * Creates a complete key that points to a specific collection_id and parent.
+   */
+  static std::string Key(absl::string_view collection_id,
+                         const model::ResourcePath& parent);
+
+  /**
+   * Decodes the given complete key, storing the decoded values in this
+   * instance.
+   *
+   * @return true if the key successfully decoded, false otherwise. If false is
+   * returned, this instance is in an undefined state until the next call to
+   * `Decode()`.
+   */
+  ABSL_MUST_USE_RESULT
+  bool Decode(absl::string_view key);
+
+  /** The collection_id, as encoded in the key. */
+  const std::string& collection_id() const {
+    return collection_id_;
+  }
+
+  /** The parent path, as encoded in the key. */
+  const model::ResourcePath& parent() const {
+    return parent_;
+  }
+
+ private:
+  // Deliberately uninitialized: will be assigned in Decode
+  std::string collection_id_;
+  model::ResourcePath parent_;
 };
 
 }  // namespace local
