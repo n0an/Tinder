@@ -23,6 +23,7 @@
 		154B651D22554BC2001E8A41 /* KeepSwipingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B651C22554BC2001E8A41 /* KeepSwipingButton.swift */; };
 		15630373223853D800D3B1C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15630372223853D800D3B1C7 /* GoogleService-Info.plist */; };
 		1567014E225A8FA900089B75 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1567014D225A8FA900089B75 /* Constants.swift */; };
+		1576391B2378843E004EBBA4 /* MatchesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1576391A2378843E004EBBA4 /* MatchesNavBar.swift */; };
 		157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B1F7C221044CC001B8483 /* RegistrationController.swift */; };
 		157B1F7F22104E1B001B8483 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B1F7E22104E1B001B8483 /* CustomTextField.swift */; };
 		157B7B2721D51CB300474BEF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B7B2621D51CB300474BEF /* User.swift */; };
@@ -63,6 +64,7 @@
 		154B651C22554BC2001E8A41 /* KeepSwipingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepSwipingButton.swift; sourceTree = "<group>"; };
 		15630372223853D800D3B1C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1567014D225A8FA900089B75 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1576391A2378843E004EBBA4 /* MatchesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesNavBar.swift; sourceTree = "<group>"; };
 		157B1F7C221044CC001B8483 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		157B1F7E22104E1B001B8483 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		157B7B2621D51CB300474BEF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 		153085FA2370BFD2003849FE /* MatchesAndMessages */ = {
 			isa = PBXGroup;
 			children = (
+				1576391A2378843E004EBBA4 /* MatchesNavBar.swift */,
 				153085FB2370C00E003849FE /* MatchesMessagesController.swift */,
 			);
 			path = MatchesAndMessages;
@@ -363,6 +366,7 @@
 				159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */,
 				150C7A7621CF7B350081887D /* AppDelegate.swift in Sources */,
 				15EC1DD5224E08BC009E919C /* UserDetailsController.swift in Sources */,
+				1576391B2378843E004EBBA4 /* MatchesNavBar.swift in Sources */,
 				15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */,
 				154B65192253F938001E8A41 /* MatchView.swift in Sources */,
 				15EC1DD3224D57AF009E919C /* LoginViewModel.swift in Sources */,

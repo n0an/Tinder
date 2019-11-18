@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 import JGProgressHUD
 
 class HomeController: UIViewController {
@@ -22,6 +24,8 @@ class HomeController: UIViewController {
 
     var swipes = [String: Int]()
     var cardViewModels = [CardViewModel]()
+    
+    var users = [String: User]()
     
     var topCardView: CardView?
     
@@ -116,7 +120,7 @@ class HomeController: UIViewController {
         
         let query = Firestore.firestore().collection("users")
             .whereField("age", isGreaterThanOrEqualTo: user?.minSeekingAge ?? SettingsController.defaultMinSeekingAge)
-            .whereField("age", isLessThanOrEqualTo: user?.maxSeekingAge ?? SettingsController.defaultMaxSeekingAge)
+            .whereField("age", isLessThanOrEqualTo: user?.maxSeekingAge ?? SettingsController.defaultMaxSeekingAge).limit(to: 10)
         
         topCardView = nil
         
@@ -135,6 +139,8 @@ class HomeController: UIViewController {
                 let userDict = docSnapshot.data()
                 
                 let user = User(dictionary: userDict)
+                
+                self.users[user.uid ?? ""] = user
                 
                 let isNotCurrentUser = user.uid != Auth.auth().currentUser?.uid
                 
@@ -218,6 +224,30 @@ class HomeController: UIViewController {
                 if likesData[currentUserID] == 1 {
                     print("MATCH")
                     self.presentMatchView(cardUID: cardUID)
+                    
+                    guard let cardUser = self.users[cardUID] else { return }
+                    
+                    let data = ["name": cardUser.name ?? "", "profileImageUrl": cardUser.imageUrl1 ?? "", "uid": cardUID, "timestamp": Timestamp(date: Date())] as [String : Any]
+                    
+                    Firestore.firestore().collection("matches_messages").document(currentUserID).collection("matches").document(cardUID).setData(data) { (er) in
+                        if let er = er {
+                            print(er.localizedDescription)
+                        }
+                    }
+                    
+                    
+                    guard let currentUser = self.user else { return }
+                    
+                    let currentUserdata = ["name": currentUser.name ?? "", "profileImageUrl": currentUser.imageUrl1 ?? "", "uid": currentUserID, "timestamp": Timestamp(date: Date())] as [String : Any]
+                    
+                    Firestore.firestore().collection("matches_messages").document(cardUID).collection("matches").document(currentUserID).setData(currentUserdata) { (er) in
+                        if let er = er {
+                            print(er.localizedDescription)
+                        }
+                    }
+                    
+                    
+                    
                 } else {
                     print("NO MATCH")
                 }
@@ -274,7 +304,7 @@ class HomeController: UIViewController {
     }
     
     @objc fileprivate func handleMessages() {
-        let vc = MatchesMessagesController(collectionViewLayout: UICollectionViewFlowLayout())
+        let vc = MatchesMessagesController()
         
         navigationController?.pushViewController(vc, animated: true)
     }
