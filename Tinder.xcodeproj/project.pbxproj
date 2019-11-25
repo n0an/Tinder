@@ -22,6 +22,12 @@
 		1528FC50238BE99600271CFA /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1528FC4F238BE99600271CFA /* ChatLogController.swift */; };
 		153085FC2370C00E003849FE /* MatchesMessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153085FB2370C00E003849FE /* MatchesMessagesController.swift */; };
 		1537251721D10140009818D2 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1537251621D10140009818D2 /* CardView.swift */; };
+		1545CD78238C3726000311AA /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1545CD77238C3726000311AA /* Match.swift */; };
+		1545CD7A238C373F000311AA /* RecentMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1545CD79238C373F000311AA /* RecentMessage.swift */; };
+		1545CD7C238C381E000311AA /* MatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1545CD7B238C381E000311AA /* MatchCell.swift */; };
+		1545CD7E238C3850000311AA /* MatchesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1545CD7D238C3850000311AA /* MatchesHeader.swift */; };
+		1545CD80238C387F000311AA /* RecentMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1545CD7F238C387F000311AA /* RecentMessageCell.swift */; };
+		1545CD82238C3990000311AA /* MatchesHorizontalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1545CD81238C3990000311AA /* MatchesHorizontalController.swift */; };
 		1548E972225772C200CC36D1 /* Firebase+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1548E971225772C200CC36D1 /* Firebase+User.swift */; };
 		154B65192253F938001E8A41 /* MatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B65182253F938001E8A41 /* MatchView.swift */; };
 		154B651B2254E77A001E8A41 /* SendMessageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B651A2254E77A001E8A41 /* SendMessageButton.swift */; };
@@ -68,6 +74,12 @@
 		1528FC4F238BE99600271CFA /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		153085FB2370C00E003849FE /* MatchesMessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesMessagesController.swift; sourceTree = "<group>"; };
 		1537251621D10140009818D2 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		1545CD77238C3726000311AA /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		1545CD79238C373F000311AA /* RecentMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessage.swift; sourceTree = "<group>"; };
+		1545CD7B238C381E000311AA /* MatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCell.swift; sourceTree = "<group>"; };
+		1545CD7D238C3850000311AA /* MatchesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHeader.swift; sourceTree = "<group>"; };
+		1545CD7F238C387F000311AA /* RecentMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessageCell.swift; sourceTree = "<group>"; };
+		1545CD81238C3990000311AA /* MatchesHorizontalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesHorizontalController.swift; sourceTree = "<group>"; };
 		1548E971225772C200CC36D1 /* Firebase+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase+User.swift"; sourceTree = "<group>"; };
 		154B65182253F938001E8A41 /* MatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchView.swift; sourceTree = "<group>"; };
 		154B651A2254E77A001E8A41 /* SendMessageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageButton.swift; sourceTree = "<group>"; };
@@ -180,6 +192,9 @@
 				1528FC49238BE89300271CFA /* MessageCell.swift */,
 				1528FC4B238BE8C600271CFA /* CustomInputAccessoryView.swift */,
 				1528FC4D238BE8FA00271CFA /* MessagesNavBar.swift */,
+				1545CD7B238C381E000311AA /* MatchCell.swift */,
+				1545CD7D238C3850000311AA /* MatchesHeader.swift */,
+				1545CD7F238C387F000311AA /* RecentMessageCell.swift */,
 			);
 			path = MatchesMessages;
 			sourceTree = "<group>";
@@ -189,6 +204,7 @@
 			children = (
 				153085FB2370C00E003849FE /* MatchesMessagesController.swift */,
 				1528FC4F238BE99600271CFA /* ChatLogController.swift */,
+				1545CD81238C3990000311AA /* MatchesHorizontalController.swift */,
 			);
 			path = MatchesAndMessages;
 			sourceTree = "<group>";
@@ -197,8 +213,10 @@
 			isa = PBXGroup;
 			children = (
 				159E2DF421D66F9F004546B0 /* Advertiser.swift */,
+				1545CD79238C373F000311AA /* RecentMessage.swift */,
 				157B7B2621D51CB300474BEF /* User.swift */,
 				1528FC46238BE72300271CFA /* Message.swift */,
+				1545CD77238C3726000311AA /* Match.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -384,11 +402,13 @@
 				150C7A7821CF7B350081887D /* HomeController.swift in Sources */,
 				154B651B2254E77A001E8A41 /* SendMessageButton.swift in Sources */,
 				15B3F97521D95AE400B4D404 /* Comparable+Clamp.swift in Sources */,
+				1545CD7E238C3850000311AA /* MatchesHeader.swift in Sources */,
 				150C7A8C21CF81D70081887D /* HomeBottomControlsStackView.swift in Sources */,
 				1548E972225772C200CC36D1 /* Firebase+User.swift in Sources */,
 				159E2DF521D66F9F004546B0 /* Advertiser.swift in Sources */,
 				150C7A7621CF7B350081887D /* AppDelegate.swift in Sources */,
 				1528FC50238BE99600271CFA /* ChatLogController.swift in Sources */,
+				1545CD78238C3726000311AA /* Match.swift in Sources */,
 				15EC1DD5224E08BC009E919C /* UserDetailsController.swift in Sources */,
 				1576391B2378843E004EBBA4 /* MatchesNavBar.swift in Sources */,
 				15EC1DCC224CC852009E919C /* AgeRangeCell.swift in Sources */,
@@ -396,12 +416,16 @@
 				1528FC4C238BE8C600271CFA /* CustomInputAccessoryView.swift in Sources */,
 				15EC1DD3224D57AF009E919C /* LoginViewModel.swift in Sources */,
 				15E29B0A224ABE7F00D14AE2 /* SettingsController.swift in Sources */,
+				1545CD7C238C381E000311AA /* MatchCell.swift in Sources */,
 				157B1F7D221044CC001B8483 /* RegistrationController.swift in Sources */,
 				1528FC4A238BE89300271CFA /* MessageCell.swift in Sources */,
 				159E2DF221D66D74004546B0 /* CardViewModel.swift in Sources */,
+				1545CD82238C3990000311AA /* MatchesHorizontalController.swift in Sources */,
+				1545CD80238C387F000311AA /* RecentMessageCell.swift in Sources */,
 				159594EF2239107F003C3AB9 /* Bindable.swift in Sources */,
 				157B1F7F22104E1B001B8483 /* CustomTextField.swift in Sources */,
 				1528FC47238BE72300271CFA /* Message.swift in Sources */,
+				1545CD7A238C373F000311AA /* RecentMessage.swift in Sources */,
 				1528FC4E238BE8FA00271CFA /* MessagesNavBar.swift in Sources */,
 				153085FC2370C00E003849FE /* MatchesMessagesController.swift in Sources */,
 				150B9917221AEC9B002785AC /* RegistrationViewModel.swift in Sources */,

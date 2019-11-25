@@ -13,7 +13,6 @@ struct Message {
     let text: String
     let fromId: String
     let toId: String
-    
     let timestamp: Timestamp
     
     let isFromCurrentLoggedUser: Bool
